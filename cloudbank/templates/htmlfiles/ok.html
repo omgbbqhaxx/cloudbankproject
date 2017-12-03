@@ -1,0 +1,159 @@
+<html>
+<head>
+<title>Cloud BANK</title>
+
+
+<script src="http://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Saira" rel="stylesheet">
+
+<style>
+.header{
+  width: 100%;
+  height: 388px;
+
+  background: url('/static/img/cb.jpeg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: absolute;
+}
+
+.content {
+  margin: 0 auto;
+  width: 550px;
+  height: 525px;
+  background-color: white;
+  position: relative;
+  top:186px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 3px #00010A;
+
+
+}
+
+#headress {
+  position: relative;
+  top:0;
+  width: 550px;
+  height: 100px;
+  background-image: url(/static/img/okress.png);
+  background-repeat: no-repeat;
+}
+
+#logo {
+  position: relative;
+  margin: 0 auto;
+  width:64px;
+  height:64px;
+  background-image: url(/static/img/logo.png);
+  background-repeat: no-repeat;
+
+}
+
+p {
+  font-family: 'Saira', sans-serif;
+}
+
+.btn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: 'Saira', sans-serif;
+  color: #ffffff;
+  font-size: 13px;
+  background: #7DC692;
+  padding: 20px 80px 20px 80px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #25b04d;
+  background-image: -webkit-linear-gradient(top, #25b04d, #25b04d);
+  background-image: -moz-linear-gradient(top, #25b04d, #25b04d);
+  background-image: -ms-linear-gradient(top, #25b04d, #25b04d);
+  background-image: -o-linear-gradient(top, #25b04d, #25b04d);
+  background-image: linear-gradient(to bottom, #25b04d, #25b04d);
+  text-decoration: none;
+}
+
+.myf {
+position: relative;
+width: 90%;
+margin: 10 auto;
+}
+
+
+.linkify {
+  color: #e67e22;
+}
+a:link {
+  text-decoration: none;
+}
+
+</style>
+</head>
+<body>
+<div class="header"></div>
+
+<div class="content">
+  <div id="headress"></div>
+<BR>
+
+  <center><p style="font-size:10px;">Wellcome<br> {{wallet_id}}</p></center>
+  {% load humanize %}
+  <center><b><p>Balance {{balance|intcomma}} CC!</p></b></center>
+
+
+<input type="text" id="pubkey" placeholder="To address" class="form-control myf">
+<input type="text" id="amount" placeholder="Amount to Send" class="form-control myf">
+
+<br>
+<center><input type="button" id="okey" value="Send" class="btn"></center>
+<br>
+ <center><p><a href="/logout" class="linkify">Logout.</a></p></center>
+</div>
+<script>
+
+$("#okey").click(function() {
+
+  var spubkey = "{{pubkey|escapejs}}";
+  var prikey =  "{{prikey|escapejs}}";
+  var swid =    "{{wallet_id|escapejs}}";
+  var pubkey =  $('#pubkey').val();
+  var amount =  $('#amount').val();
+
+
+      $.ajax({
+        type:'POST',
+        url:'/sendcloudcoin/',
+        data:{
+          spubkey : spubkey,
+          sprikey : prikey,
+          swid : swid,
+          pubkey: pubkey,
+  				amount:parseInt(amount)},
+        success:function(msg){
+          if(msg["response"] == "fail"){
+            alert("Fail")
+          }else{
+            window.location.reload();
+          }
+
+          var myJSON = JSON.stringify(msg);
+          console.log(myJSON);
+
+
+
+        },
+      });
+
+});
+
+
+</script>
+</body>
+
+</html>
