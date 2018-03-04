@@ -11,9 +11,7 @@ import pytz, datetime
 
 class transaction(models.Model):
     sender = models.CharField(max_length=5000,null=False) #Sender's PUBLIC KEY.
-    senderhexdigest = models.CharField(max_length=5000,null=False) #Sender's Digest
     receiver = models.CharField(max_length=5000,null=False) #Receivers's PUBLIC KEY.
-    receiverhexdigest = models.CharField(max_length=5000,null=False) #Receivers's Digest
     prevblockhash = models.CharField(max_length=5000,null=False)
     blockhash = models.CharField(max_length=5000,null=False)
     amount = models.IntegerField(null=False)
@@ -24,4 +22,3 @@ class transaction(models.Model):
     verification = models.BooleanField(blank=True)
     def __str__(self):
         return("BlockHash : %s "% (self.blockhash))
-    

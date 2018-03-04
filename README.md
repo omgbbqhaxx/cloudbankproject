@@ -29,7 +29,7 @@ sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install vim -y
 
 
 
-## Install python last version.
+## Install python last version..
 
 ```shell
 sudo add-apt-repository ppa:fkrull/deadsnakes
@@ -46,12 +46,14 @@ virtualenv -p python3 venv
 pip install pytz
 pip install netifaces
 pip install django
+pip install gunicorn
 pip install tornado
 pip install twisted[tls]
 pip install aioredis
 pip install pycrypto
 pip install autobahn[twisted]
 pip install bson
+pip install ecdsa
 pip install websocket-client
 pip install pipenv
 pipenv install requests

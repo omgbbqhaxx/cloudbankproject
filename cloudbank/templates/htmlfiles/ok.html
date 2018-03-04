@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Saira" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/messenger.css">
+<link rel="stylesheet" href="/static/css/messenger-theme-future.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/messenger/1.5.0/js/messenger.min.js"></script>
 
 <style>
 .header{
@@ -107,7 +110,7 @@ a:link {
   <center><b><p>Balance {{balance|intcomma}} CC!</p></b></center>
 
 
-<input type="text" id="pubkey" placeholder="To address" class="form-control myf">
+<input type="text" id="receiverwallet" placeholder="Receiver address" class="form-control myf">
 <input type="text" id="amount" placeholder="Amount to Send" class="form-control myf">
 
 <br>
@@ -115,31 +118,30 @@ a:link {
 <br>
  <center><p><a href="/logout" class="linkify">Logout.</a></p></center>
 </div>
+
+
+
 <script>
-
 $("#okey").click(function() {
-
-  var spubkey = "{{pubkey|escapejs}}";
   var prikey =  "{{prikey|escapejs}}";
-  var swid =    "{{wallet_id|escapejs}}";
-  var pubkey =  $('#pubkey').val();
+  var receiverwallet =  $('#receiverwallet').val();
   var amount =  $('#amount').val();
-
-
       $.ajax({
         type:'POST',
         url:'/sendcloudcoin/',
         data:{
-          spubkey : spubkey,
           sprikey : prikey,
-          swid : swid,
-          pubkey: pubkey,
+          receiverwallet: receiverwallet,
   				amount:parseInt(amount)},
         success:function(msg){
-          if(msg["response"] == "fail"){
-            alert("Fail")
+          if(msg["response"] == "response"){
+            Messenger().post(msg["explain"]);
           }else{
-            window.location.reload();
+            $('#pubkey').val('');
+            $('#amount').val('');
+
+            Messenger().post(msg["explain"]);
+            //window.location.reload();
           }
 
           var myJSON = JSON.stringify(msg);
@@ -151,7 +153,6 @@ $("#okey").click(function() {
       });
 
 });
-
 
 </script>
 </body>

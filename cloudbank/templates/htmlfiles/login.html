@@ -106,26 +106,28 @@ a:link {
   <CENTER><b><p>Wellcome to CloudCoin!</p></b></CENTER>
 
 
-<input type="text" id="pubkey" placeholder="Public key" class="form-control myf">
+
 <input type="text" id="prikey" placeholder="Private key" class="form-control myf">
 
 <br>
-<center><input type="button" id="okey" value="Check wallet" class="btn"></center>
+<center><input type="button" id="okey" value="GO" class="btn"></center>
 <br>
-    <CENTER><p><a href="/" class="linkify">Return back from here.</a></p></CENTER>
+    <CENTER><p><a href="/" class="linkify">or return back</a></p></CENTER>
 </div>
+
+
+
+
 <script>
 
 $("#okey").click(function() {
-  var pubkey =  $('#pubkey').val();
   var prikey =  $('#prikey').val();
 
 
       $.ajax({
         type:'POST',
         url:'/checkwallet/',
-        data:{pubkey: pubkey,
-  				prikey:prikey},
+        data:{prikey:prikey},
         success:function(obj){
 
           //var obj = JSON.parse(msg);

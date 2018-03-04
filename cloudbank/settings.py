@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -25,9 +24,9 @@ SECRET_KEY = 'j54w1jdm@o(7vmnv=9_duz$c8zg-brf3z%i8yf%9@o(@k4fezu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','128.199.247.189','cloudbankproject.com','www.cloudbankproject.com']
+ALLOWED_HOSTS = ['localhost','159.89.197.53','cloudbankproject.com','www.cloudbankproject.com']
 
-
+CURRENCY = "CC"
 # Application definition
 
 INSTALLED_APPS = [
