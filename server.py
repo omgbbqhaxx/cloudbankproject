@@ -56,8 +56,6 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
 clients = []
 
 class BroadcastServerFactory(WebSocketServerFactory):
-    #self.broadcast serverda yayın yapar..
-
     def __init__(self, url):
         WebSocketServerFactory.__init__(self, url)
     def register(self, client):
