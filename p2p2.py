@@ -53,9 +53,9 @@ from autobahn.twisted.websocket import WebSocketClientFactory, \
 connectWS
 
 
-BLIST = [u"ws://128.199.247.189:9000"]
+BLIST = [u"ws://159.89.197.53:9000"]
 #BLIST = [u"ws://128.199.247.189:9000",u"ws://127.0.0.1:9000"]
-BLISTTWO =  ["128.199.247.189"]
+BLISTTWO =  ["159.89.197.53"]
 #BLISTTWO =  ["128.199.247.189","127.0.0.1"]
 
 ni.ifaddresses('eth0')
@@ -147,41 +147,25 @@ class MyClientProtocol(WebSocketClientProtocol):
                 payloaded = json.loads(payload.decode('utf-8'))
                 if 'senderhexdigest' in payloaded:
                     print(payload)
-
-
-
-
                     data['senderpublickey'] = str(payloaded["senderhexdigest"])  #1
                     data['receiverhex'] = str(payloaded["receiverhexdigest"])       #2
                     data['previous_hash'] = str(transaction.objects.all().last().blockhash) #3
                     data['amount'] = str(payloaded["amount"]) #4
                     data['timestamp'] = str(payloaded["first_timestamp"]) #5
                     data["nonce"] = str(payloaded["nonce"])
-
                     data = collections.OrderedDict(sorted(data.items()))
                     print("ozel data",data)
                     datashash  = SHA256.new(json.dumps(data).encode('utf-8')).hexdigest()
                     print(datashash)
-
                     datashash = datashash.encode('utf-8')
-
-                    print(datashash)
-
-                    #//datashash = payloaded["blockhash"].encode('utf-8')
-
                     newkey = RSA.importKey(base64.b64decode(payloaded["sender"]))
-
-
                     if(newkey.verify(datashash, json.loads(payloaded["P2PKH"]) )):
                         print("Match")
                     else:
                         print("failift")
 
-
                     newtrans = transaction(sender=payloaded["sender"],
-                    senderhexdigest=payloaded["senderhexdigest"],
                     receiver=payloaded["receiver"],
-                    receiverhexdigest=payloaded["receiverhexdigest"],
                     prevblockhash=transaction.objects.all().last().blockhash,
                     blockhash=payloaded["blockhash"],
                     amount=payloaded["amount"],
@@ -264,9 +248,9 @@ if __name__ == '__main__':
     factory.protocol = BroadcastServerProtocol
     reactor.listenTCP(9000, factory)
 
-    factory = WebSocketClientFactory(u"ws://128.199.247.189:9000")
+    factory = WebSocketClientFactory(u"ws://159.89.197.53:9000")
     factory.protocol = MyClientProtocol
 
-    reactor.connectTCP(u"128.199.247.189", 9000, factory)
+    reactor.connectTCP(u"159.89.197.53", 9000, factory)
 
     reactor.run()
