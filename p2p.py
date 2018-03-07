@@ -166,8 +166,8 @@ def syncfirst():
     r = requests.get('http://159.89.197.53/alltransactions/')
     alltrans = r.json()
     print(type(alltrans))
-    lasttransactionid = alltrans["alltestsarecomplated"][-1]["id"]
-    print("lts",lasttransactionid)
+    lasttransactionhash = alltrans["alltestsarecomplated"][-1]["blockhash"]
+    print("lts",lasttransactionhash)
     try:
         gtfd = transaction.objects.all().reverse()[0] #[::-1]
     except IndexError:
@@ -185,9 +185,10 @@ def syncfirst():
             newtrans.save()
 
     gtfd = transaction.objects.all()[::-1][0]
-    print("where im i", gtfd)
+    print("where im i", gtfd.hash)
 
-    if(int(lasttransactionid) > int(gtfd.id)):
+
+    if(int(lasttransactionhash) > int(gtfd.hash)):
         for x in alltrans["alltestsarecomplated"]:
             if(int(x["id"]) > int(gtfd.id)):
                 print(x["id"])
