@@ -167,7 +167,7 @@ def syncfirst():
     alltrans = r.json()
     print(type(alltrans))
     lasttransactionid = alltrans["alltestsarecomplated"][-1]["id"]
-    print(lasttransactionid)
+    print("lts",lasttransactionid)
     try:
         gtfd = transaction.objects.all().reverse()[0] #[::-1]
     except IndexError:
@@ -185,7 +185,7 @@ def syncfirst():
             newtrans.save()
 
     gtfd = transaction.objects.all()[::-1][0]
-    print(gtfd)
+    print("where im i", gtfd)
 
     if(int(lasttransactionid) > int(gtfd.id)):
         for x in alltrans["alltestsarecomplated"]:
