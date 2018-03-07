@@ -167,6 +167,7 @@ def syncfirst():
     alltrans = r.json()
     print(type(alltrans))
     lasttransactionid = alltrans["alltestsarecomplated"][-1]["id"]
+    print(lasttransactionid)
     try:
         gtfd = transaction.objects.all().reverse()[0] #[::-1]
     except IndexError:
