@@ -188,7 +188,7 @@ def syncfirst():
     print("where im i", gtfd.blockhash)
 
 
-    if(int(lasttransactionhash) != int(gtfd.blockhash)):
+    if(lasttransactionhash != gtfd.blockhash):
         for x in alltrans["alltestsarecomplated"]:
             if(int(x["id"]) > int(gtfd.id)):
                 print(x["id"])
