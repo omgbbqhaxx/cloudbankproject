@@ -185,10 +185,10 @@ def syncfirst():
             newtrans.save()
 
     gtfd = transaction.objects.all()[::-1][0]
-    print("where im i", gtfd.hash)
+    print("where im i", gtfd.blockhash)
 
 
-    if(int(lasttransactionhash) > int(gtfd.hash)):
+    if(int(lasttransactionhash) > int(gtfd.blockhash)):
         for x in alltrans["alltestsarecomplated"]:
             if(int(x["id"]) > int(gtfd.id)):
                 print(x["id"])
