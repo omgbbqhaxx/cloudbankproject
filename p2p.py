@@ -1,29 +1,4 @@
-###############################################################################
-#
-# The MIT License (MIT)
-#
-# Copyright (c) Crossbar.io Technologies GmbH
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-#
-###############################################################################
-
+#-*- coding: utf-8 -*-
 import sys, json, requests, django ,os ,base64, collections
 
 from Crypto.PublicKey import RSA
@@ -76,7 +51,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             print(json.loads(payload))
             myjson = json.loads(payload)
             if myjson["server"]:
-                print("bu mesaj serverdan gelmiş demektir")
+                print("that message came from server")
                 addnewnode(myjson["host"])
             else:
                 print(myjson["message"])
@@ -91,7 +66,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
 clients = []
 
 class BroadcastServerFactory(WebSocketServerFactory):
-    #self.broadcast serverda yayın yapar..
+    #self.broadcast serverda yayn yapar..
 
     def __init__(self, url):
         WebSocketServerFactory.__init__(self, url)
@@ -176,7 +151,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                     ).save()
 
                 else:
-                    print("başka bir mesajjj")
+                    print("other message")
                 BroadcastServerFactory.broadcast(payload)
 
     def onClose(self, wasClean, code, reason):
