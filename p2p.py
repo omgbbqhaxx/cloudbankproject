@@ -185,6 +185,7 @@ def syncfirst():
             newtrans.save()
 
     gtfd = transaction.objects.all()[::-1][0]
+    print(gtfd)
 
     if(int(lasttransactionid) > int(gtfd.id)):
         for x in alltrans["alltestsarecomplated"]:
