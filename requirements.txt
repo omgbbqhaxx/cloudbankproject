@@ -1,0 +1,13 @@
+pytz==2018.3
+netifaces==0.10.6
+django==2.0.3
+gunicorn==19.7.1
+tornado==5.0
+twisted[tls]==17.9.0
+aioredis==1.1.0
+pycrypto==2.6.1
+autobahn[twisted]==18.3.1
+bson==0.5.2
+ecdsa==0.13
+websocket-client==0.47.0
+pipenv==11.0.2

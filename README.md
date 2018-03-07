@@ -34,6 +34,8 @@ sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install vim -y
 ```shell
 sudo add-apt-repository ppa:fkrull/deadsnakes
 sudo apt-get update
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
 sudo apt-get install python3.4
 sudo apt-get install python3-pip
 pip install --upgrade virtualenv
@@ -43,19 +45,7 @@ pip install --upgrade virtualenv
 
 ```shell
 virtualenv -p python3 venv
-pip install pytz
-pip install netifaces
-pip install django
-pip install gunicorn
-pip install tornado
-pip install twisted[tls]
-pip install aioredis
-pip install pycrypto
-pip install autobahn[twisted]
-pip install bson
-pip install ecdsa
-pip install websocket-client
-pip install pipenv
+pip install -r requirements.txt
 pipenv install requests
 ```
 

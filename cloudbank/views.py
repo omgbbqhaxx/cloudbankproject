@@ -117,7 +117,7 @@ def createnewwallet(request):
     qey = instantwallet()
     data['private_key'] = qey[0]
     data['wallet_id'] = qey[1]
-    data['pkey'] = qey[2]
+    #data['pkey'] = qey[2]
     datas['wallet'] = data
     return HttpResponse(json.dumps(datas), content_type = "application/json")
 
