@@ -112,13 +112,13 @@ class BroadcastServerFactory(WebSocketServerFactory):
     def broadcast(self, msg):
         for c in clients:
             c.sendMessage(msg)
-            print("messaj disaridan aldım {}".format(c.peer))
+            print("messaj disaridan aldim {}".format(c.peer))
 
 
 
 class MyClientProtocol(WebSocketClientProtocol):
     def onConnect(self, response):
-        print("33 'den servera baglanıldı': {0}".format(response.peer))
+        print("33 'den servera connected': {0}".format(response.peer))
 
     def onOpen(self):
         print("WebSocket connection open.")
@@ -138,7 +138,7 @@ class MyClientProtocol(WebSocketClientProtocol):
         if isBinary:
             print("Binary message received: {0} bytes".format(len(payload)))
         else:
-            print("burası mı çalışıyor 11082")
+
             payloaded = json.loads(payload.decode('utf-8'))
             print(payloaded["host"])
             if str(payloaded["host"]) == str(ip):
