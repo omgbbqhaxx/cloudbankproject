@@ -188,7 +188,7 @@ class MyClientProtocol(WebSocketClientProtocol):
 
 
 def syncfirst():
-    r = requests.get('http://cloudbankproject.com/alltransactions/')
+    r = requests.get('http://159.89.197.53/alltransactions/')
     alltrans = r.json()
     print(type(alltrans))
     lasttransactionid = alltrans["alltestsarecomplated"][-1]["id"]
@@ -198,9 +198,7 @@ def syncfirst():
         for x in alltrans["alltestsarecomplated"]:
             print(x["id"])
             newtrans = transaction(sender=x["sender"],
-            senderhexdigest=x["senderhexdigest"],
             receiver=x["receiver"],
-            receiverhexdigest=x["receiverhexdigest"],
             prevblockhash=x["prevblockhash"],
             blockhash=x["blockhash"],
             amount=x["amount"],
@@ -217,9 +215,7 @@ def syncfirst():
             if(int(x["id"]) > int(gtfd.id)):
                 print(x["id"])
                 newtrans = transaction(sender=x["sender"],
-                senderhexdigest=x["senderhexdigest"],
                 receiver=x["receiver"],
-                receiverhexdigest=x["receiverhexdigest"],
                 prevblockhash=x["prevblockhash"],
                 blockhash=x["blockhash"],
                 amount=x["amount"],
