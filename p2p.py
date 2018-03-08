@@ -1,5 +1,7 @@
 #-*- coding: utf-8 -*-
-import sys, json, requests, django ,os ,base64, collections
+import sys, json, requests, django ,os ,base64, collections,hashlib, math
+from django.utils.encoding import smart_str
+from ecdsa import SigningKey, SECP256k1, NIST384p, BadSignatureError, VerifyingKey
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
@@ -20,12 +22,6 @@ from autobahn.twisted.websocket import WebSocketServerFactory, \
 from autobahn.twisted.websocket import WebSocketClientFactory, \
     WebSocketClientProtocol, \
 connectWS
-
-
-BLIST = [u"ws://159.89.197.53:9000"]
-#BLIST = [u"ws://128.199.247.189:9000",u"ws://127.0.0.1:9000"]
-BLISTTWO =  ["159.89.197.53"]
-#BLISTTWO =  ["128.199.247.189","127.0.0.1"]
 
 ni.ifaddresses('eth0')
 ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
@@ -103,6 +99,7 @@ class MyClientProtocol(WebSocketClientProtocol):
 
     def onMessage(self, payload, isBinary):
         data = {}
+        print("onmessage")
         allify = {}
         if isBinary:
             print("Binary message received: {0} bytes".format(len(payload)))
@@ -114,24 +111,39 @@ class MyClientProtocol(WebSocketClientProtocol):
                 print("bu zaten sensin")
             else:
                 payloaded = json.loads(payload.decode('utf-8'))
-                if 'senderhexdigest' in payloaded:
-                    print(payload)
-                    data['senderpublickey'] = str(payloaded["senderhexdigest"])  #1
-                    data['receiverhex'] = str(payloaded["receiverhexdigest"])       #2
-                    data['previous_hash'] = str(transaction.objects.all().last().blockhash) #3
-                    data['amount'] = str(payloaded["amount"]) #4
-                    data['timestamp'] = str(payloaded["first_timestamp"]) #5
+                if 'sender' in payloaded:
+                    data['sender'] = str(payloaded["sender"])                                       #1
+                    data['receiver'] = str(payloaded["receiver"])                                          #2
+                    data['previous_hash'] = str(transaction.objects.all().last().blockhash)         #3
+                    data['amount'] = str(payloaded["amount"])                                       #4
+                    data['timestamp'] = str(payloaded["timestamp"])                           #5
                     data["nonce"] = str(payloaded["nonce"])
                     data = collections.OrderedDict(sorted(data.items()))
-                    print("ozel data",data)
                     datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()
-                    print(datashash)
-                    datashash = datashash.encode('utf-8')
-                    newkey = RSA.importKey(base64.b64decode(payloaded["sender"]))
-                    if(newkey.verify(datashash, json.loads(payloaded["P2PKH"]) )):
-                        print("Match")
-                    else:
-                        print("failift")
+                    sig = json.loads(payloaded["P2PKH"])
+
+                    print("datahashhere", datashash.encode('utf-8'))
+                    print("sigbyte is here", sig)
+                    print("sende weas here", payloaded["sender"])
+
+                    try:
+                        sigbyte =  bytes.fromhex(sig)
+                        vk = VerifyingKey.from_string(bytes.fromhex(payloaded["sender"]), curve=SECP256k1)
+                        tt = vk.verify(sigbyte, datashash.encode('utf-8')) # True
+                    except BadSignatureError:
+                        print("unbelieveable")
+                        data["response"] = "unbelieveable"
+                        newtrans = transaction(sender=payloaded["sender"],
+                        receiver=payloaded["receiver"],
+                        prevblockhash=transaction.objects.all().last().blockhash,
+                        blockhash=payloaded["blockhash"],
+                        amount=payloaded["amount"],
+                        nonce=payloaded["nonce"],
+                        first_timestamp=payloaded["timestamp"],
+                        P2PKH=payloaded["P2PKH"],
+                        verification=False
+                        ).save()
+                        print("badsignature")
 
                     newtrans = transaction(sender=payloaded["sender"],
                     receiver=payloaded["receiver"],
@@ -139,7 +151,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                     blockhash=payloaded["blockhash"],
                     amount=payloaded["amount"],
                     nonce=payloaded["nonce"],
-                    first_timestamp=payloaded["first_timestamp"],
+                    first_timestamp=payloaded["timestamp"],
                     P2PKH=payloaded["P2PKH"],
                     verification=True
                     ).save()

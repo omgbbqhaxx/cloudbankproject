@@ -207,11 +207,11 @@ def sendcloudcoin(request):
             return HttpResponse(json.dumps(allify), content_type = "application/json")
         else:
             first_timestamp = time.time()
-            data['senderpublickey'] = str(sender) #1
-            data['receiverhex'] = str(receiverwallet)      #2
-            data['previous_hash'] = str(transaction.objects.all().last().blockhash) #3
-            data['amount'] = str(amount) #4
-            data['timestamp'] = str(first_timestamp) #5
+            data['sender'] = str(sender)                                                    #1
+            data['receiver'] = str(receiverwallet)                                          #2
+            data['previous_hash'] = str(transaction.objects.all().last().blockhash)         #3
+            data['amount'] = str(amount)                                                    #4
+            data['timestamp'] = str(first_timestamp)                                        #5
             perfect =  miner(first_timestamp, sender, receiverwallet, amount)
             data["nonce"] = str(perfect)
             data = collections.OrderedDict(sorted(data.items()))
@@ -224,6 +224,7 @@ def sendcloudcoin(request):
             except UnicodeDecodeError:
                 data["response"] = "Check your wallet details"
                 return HttpResponse(json.dumps(data), content_type="application/json")
+            print("digital sign ishere", datashash.encode('utf-8'))
             digitalSignature = sk.sign(datashash.encode('utf-8'))
             digitalSignature = json.dumps(digitalSignature.hex())
 
@@ -247,7 +248,7 @@ def sendcloudcoin(request):
             "blockhash":datashash,
             "amount":amount,
             "nonce":perfect,
-            "first_timestamp":first_timestamp,
+            "timestamp":first_timestamp,
             "P2PKH":digitalSignature,
             "verification":True,
             "block" : transaction.objects.all().last().id + 1,
