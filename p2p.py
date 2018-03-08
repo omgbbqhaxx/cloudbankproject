@@ -1,11 +1,5 @@
 #-*- coding: utf-8 -*-
 import sys, json, requests, django ,os ,base64, collections
-
-from Crypto.PublicKey import RSA
-from Crypto import Random
-from Crypto.Hash import SHA256
-from Crypto.Signature import PKCS1_v1_5
-
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
@@ -130,7 +124,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                     data["nonce"] = str(payloaded["nonce"])
                     data = collections.OrderedDict(sorted(data.items()))
                     print("ozel data",data)
-                    datashash  = SHA256.new(json.dumps(data).encode('utf-8')).hexdigest()
+                    datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()
                     print(datashash)
                     datashash = datashash.encode('utf-8')
                     newkey = RSA.importKey(base64.b64decode(payloaded["sender"]))
@@ -165,34 +159,11 @@ class MyClientProtocol(WebSocketClientProtocol):
 def syncfirst():
     r = requests.get('http://159.89.197.53/alltransactions/')
     alltrans = r.json()
-    print(type(alltrans))
-    lasttransactionhash = alltrans["alltestsarecomplated"][-1]["blockhash"]
-    print("lts",lasttransactionhash)
-    try:
-        gtfd = transaction.objects.all().reverse()[0] #[::-1]
-    except IndexError:
-        for x in alltrans["alltestsarecomplated"]:
-            print(x["id"])
+    for x in alltrans["alltestsarecomplated"]:
+        try:
+            mytransactions = transaction.objects.get(blockhash=x["blockhash"])
+        except transaction.DoesNotExist:
             newtrans = transaction(sender=x["sender"],
-            receiver=x["receiver"],
-            prevblockhash=x["prevblockhash"],
-            blockhash=x["blockhash"],
-            amount=x["amount"],
-            nonce=x["nonce"],
-            first_timestamp=x["first_timestamp"],
-            P2PKH=x["P2PKH"],
-            verification=x["verification"])
-            newtrans.save()
-
-    gtfd = transaction.objects.all()[::-1][0]
-    print("where im i", gtfd.blockhash)
-
-
-    if(lasttransactionhash != gtfd.blockhash):
-        for x in alltrans["alltestsarecomplated"]:
-            if(int(x["id"]) > int(gtfd.id)):
-                print(x["id"])
-                newtrans = transaction(sender=x["sender"],
                 receiver=x["receiver"],
                 prevblockhash=x["prevblockhash"],
                 blockhash=x["blockhash"],
@@ -201,9 +172,9 @@ def syncfirst():
                 first_timestamp=x["first_timestamp"],
                 P2PKH=x["P2PKH"],
                 verification=x["verification"])
-                newtrans.save()
-    else:
-        print("already synced")
+            newtrans.save()
+    print("everyting is up-da-te")
+
 
 
 
