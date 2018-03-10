@@ -89,7 +89,7 @@ circusctl quit --waiting
 
 # REST API
 
-##GET Endpoints
+## GET Endpoints
  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
 
 ## License
