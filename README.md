@@ -102,8 +102,10 @@ circusctl quit --waiting
 
 ## POST Endpoints
   * `http://$yourURL.com/sendcloudcoin/`
-  ⋅⋅⋅ `sprikey` sender's private key
-  ⋅⋅⋅ `receiverwalletallows`  receiver's wallet
+  * `sprikey` sender's private key
+  * `receiverwalletallows`  receiver's wallet
+  * `amount`  and amont.
+  ___
 
   * `http://$yourURL.com/alltransactions/` - allows to get all transactions from database.
   * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
