@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from ecdsa import SigningKey, SECP256k1, NIST384p, BadSignatureError, VerifyingKey
 import hashlib
 from django.conf import settings

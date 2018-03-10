@@ -87,6 +87,8 @@ You can exist from program if already running.
 circusctl quit --waiting
 ```
 
+## API LIST
+ * `http://159.65.89.225/createnewwallet/` - allows to create new wallet and private key.
 
 ## License
 
