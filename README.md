@@ -87,7 +87,7 @@ You can exist from program if already running.
 circusctl quit --waiting
 ```
 
-# REST API
+# REST APIs
 
 ## GET Endpoints
  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
@@ -104,7 +104,7 @@ circusctl quit --waiting
   * `http://$yourURL.com/sendcloudcoin/`
   * `sprikey` sender's private key
   * `receiverwalletallows`  receiver's wallet
-  * `amount`  and amont.
+  * `amount`  and amount.
   ___
 
   * `http://$yourURL.com/alltransactions/` - allows to get all transactions from database.
@@ -116,8 +116,8 @@ circusctl quit --waiting
 
 
 ## Donations
-  *My ethereum wallet : 0xFBd6f9704478104f0EF3F4f9834c3621210fE598
-  *My Nano wallet : xrb_1ppmk9ki9kungyer845deysmwokfeughmojxuhorpn7fpiizmka7b3r5jj4z
+  * My ethereum wallet : `0xFBd6f9704478104f0EF3F4f9834c3621210fE598`
+  * My Nano wallet : `xrb_1ppmk9ki9kungyer845deysmwokfeughmojxuhorpn7fpiizmka7b3r5jj4z`
 
 ## License
 
