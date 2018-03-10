@@ -1,7 +1,6 @@
 from Crypto.PublicKey import RSA
 from Crypto import Random
-import base64
-import json
+import base64, json
 from Crypto.Hash import SHA256
 from Crypto.Signature import PKCS1_v1_5
 
@@ -56,15 +55,15 @@ joker = base64.b64encode(twitter)
 
 newkey = RSA.importKey(base64.b64decode(joker))
 
-print digitalSignature
+print(digitalSignature)
 x = json.dumps(digitalSignature)
 
 #print(x)
 
 
-print type(x)
+print(type(x))
 
 if(newkey.verify(hashsB, json.loads(x))):
-    print "Match"
+    print("Match")
 else:
-    print "failift"
+    print ("failift")

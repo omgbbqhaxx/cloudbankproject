@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-import uuid , json , string , random, urllib, base64, os, sys, time, pickle, collections, math
+import uuid , json , string , random, urllib, base64, os, sys, time, pickle, collections, math, arrow
 from django.utils.encoding import smart_str
 from ecdsa import SigningKey, SECP256k1, NIST384p, BadSignatureError, VerifyingKey
 from django.http import *
@@ -158,11 +158,11 @@ def checkwallet(request):
 def miner(first_timestamp, senderwalletid, receiverhex,amount):
     data = {}
     for nonce in range(0,10000000):
-        data['senderpublickey'] = str(senderwalletid) #1
-        data['receiverhex'] = str(receiverhex)      #2
-        data['previous_hash'] =  str(transaction.objects.all().last().blockhash) #3
-        data['amount'] = str(amount) #4
-        data['timestamp'] =  str(first_timestamp) #5
+        data['sender'] = str(senderwalletid)                                        #1
+        data['receiver'] = str(receiverhex)                                         #2
+        data['previous_hash'] =  str(transaction.objects.all().last().blockhash)    #3
+        data['amount'] = str(amount)                                                #4
+        data['timestamp'] =  str(first_timestamp)                                   #5
         data["nonce"] = str(nonce)
         data = collections.OrderedDict(sorted(data.items()))
         datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()

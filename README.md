@@ -50,6 +50,15 @@ pipenv install requests
 ```
 
 
+## After clone our project.
+
+```shell
+export DJANGO_SETTINGS_MODULE=cloudbank.settings
+```
+
+
+
+
 ## Circus: A Process & Socket Manager configurations
 The simplest way to install it is to use pip, a tool for installing and managing Python packages:
 ```shell

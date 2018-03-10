@@ -113,10 +113,10 @@ class MyClientProtocol(WebSocketClientProtocol):
                 payloaded = json.loads(payload.decode('utf-8'))
                 if 'sender' in payloaded:
                     data['sender'] = str(payloaded["sender"])                                       #1
-                    data['receiver'] = str(payloaded["receiver"])                                          #2
+                    data['receiver'] = str(payloaded["receiver"])                                   #2
                     data['previous_hash'] = str(transaction.objects.all().last().blockhash)         #3
                     data['amount'] = str(payloaded["amount"])                                       #4
-                    data['timestamp'] = str(payloaded["timestamp"])                           #5
+                    data['timestamp'] = str(payloaded["timestamp"])                                 #5
                     data["nonce"] = str(payloaded["nonce"])
                     data = collections.OrderedDict(sorted(data.items()))
                     datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()
