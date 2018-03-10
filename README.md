@@ -92,6 +92,31 @@ circusctl quit --waiting
 ## GET Endpoints
  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
 
+ * `http://$yourURL.com/alltransactions/` - allows to get all transactions from database.
+ * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+ * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+ * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+ * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+ * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+
+
+## POST Endpoints
+  ** `http://$yourURL.com/sendcloudcoin/` 
+  *`sprikey <- sender's private key`
+  *`receiverwalletallows <- receiver's wallet`  to create new wallet and private key.
+
+  * `http://$yourURL.com/alltransactions/` - allows to get all transactions from database.
+  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+
+
+## Donations
+  *My ethereum wallet : 0xFBd6f9704478104f0EF3F4f9834c3621210fE598
+  *My Nano wallet : xrb_1ppmk9ki9kungyer845deysmwokfeughmojxuhorpn7fpiizmka7b3r5jj4z
+
 ## License
 
 [![License](https://img.shields.io/github/license/ethereum/cpp-ethereum.svg)](LICENSE)
