@@ -206,7 +206,9 @@ def sendcloudcoin(request):
             allify['explain'] = "insufficient balance"
             return HttpResponse(json.dumps(allify), content_type = "application/json")
         else:
-            first_timestamp = time.time()
+            utc = arrow.utcnow()
+            local = utc.to('GMT')
+            first_timestamp = local.timestamp
             data['sender'] = str(sender)                                                    #1
             data['receiver'] = str(receiverwallet)                                          #2
             data['previous_hash'] = str(transaction.objects.all().last().blockhash)         #3
