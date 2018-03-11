@@ -169,7 +169,7 @@ class MyClientProtocol(WebSocketClientProtocol):
 
 
 def syncfirst():
-    r = requests.get('http://159.89.197.53/alltransactions/')
+    r = requests.get('http://159.89.197.53/api/v1/alltransactions/')
     alltrans = r.json()
     for x in alltrans["alltestsarecomplated"]:
         try:

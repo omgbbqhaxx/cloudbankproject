@@ -170,7 +170,7 @@ $(document).ready(function(){
 <div class="content">
 
 <BR>
-  <CENTER><b><p>Realtime transactions | Show all transaction from our <a href="/alltransactions">api</a></p></b></CENTER>
+  <CENTER><b><p>Realtime transactions | Show all transaction from our <a href="/api/v1/alltransactions">api</a></p></b></CENTER>
 
   <table class="table">
     <thead>
@@ -185,7 +185,7 @@ $(document).ready(function(){
 
       {% for t in transactions %}
       <tr>
-        <th scope="row"><a target="_blank" href="http://cloudbankproject.com/gettransaction/{{t.id}}/">{{t.id}}</a></th>
+        <th scope="row"><a target="_blank" href="/api/v1/gettransaction/{{t.id}}/">{{t.id}}</a></th>
         <td><a href="#{{t.sender}}" data-toggle="tooltip" data-placement="top" title="{{t.sender}}">{{t.sender|slice:":10"}}</a> </td>
         <td><a href="#{{t.receiver}}" data-toggle="tooltip" data-placement="top" title="{{t.receiver}}">{{t.receiver|slice:":10"}}</a> </td>
         <td>{{t.amount}} CC</td>

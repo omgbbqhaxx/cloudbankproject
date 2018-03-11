@@ -126,7 +126,7 @@ $("#okey").click(function() {
 
       $.ajax({
         type:'POST',
-        url:'/checkwallet/',
+        url:'/api/v1/checkwallet/',
         data:{prikey:prikey},
         success:function(obj){
 

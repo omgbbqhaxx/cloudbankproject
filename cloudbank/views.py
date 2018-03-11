@@ -40,44 +40,6 @@ def ws(request):
     transactions = transaction.objects.all()[::-1][0:8]
     return render(request, "ws.html", locals())
 
-def gettransaction(request, tid):
-        data = {}
-        trr = transaction.objects.get(id=int(tid))
-        data = {"sender" : trr.sender,
-                     "receiver": trr.receiver,
-                     "prevblockhash": trr.prevblockhash,
-                     "blockhash": trr.blockhash,
-                     "amount": trr.amount,
-                     "nonce": trr.nonce,
-                     "first_timestamp": trr.first_timestamp,
-                     "saved_timestamp": trr.saved_timestamp.strftime("%Y-%m-%d"),
-                     "P2PKH": trr.P2PKH,
-                     "verification": trr.verification}
-        return HttpResponse(json.dumps(data), content_type = "application/json")
-
-
-
-
-def alltransactions(request):
-    data = {}
-    txs = []
-    transactions = transaction.objects.all()
-    for trr in transactions:
-        gettrs = {"sender" : trr.sender,
-                     "receiver": trr.receiver,
-                     "prevblockhash": trr.prevblockhash,
-                     "blockhash": trr.blockhash,
-                     "amount": trr.amount,
-                     "nonce": trr.nonce,
-                     "first_timestamp": trr.first_timestamp,
-                     "saved_timestamp": trr.saved_timestamp.strftime("%Y-%m-%d"),
-                     "P2PKH": trr.P2PKH,
-                     "verification": trr.verification,
-                     "id":trr.id}
-        txs.append(gettrs)
-
-    data['alltestsarecomplated'] = txs
-    return HttpResponse(json.dumps(data), content_type = "application/json")
 
 
 def getbalance(pubkey):
@@ -242,7 +204,7 @@ def sendcloudcoin(request):
             )
             newtrans.save()
             ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
-            geturl = "http://{}/gettransaction/{}/".format(ip,newtrans.id)
+            geturl = "http://{}/api/vi/gettransaction/{}/".format(ip,newtrans.id)
             test = {"server":False,
             "sender":sender,
             "receiver":receiverwallet,

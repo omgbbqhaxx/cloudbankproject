@@ -90,29 +90,22 @@ circusctl quit --waiting
 # REST APIs
 
 ## GET Endpoints
- * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+ * `http://$yourURL.com/api/v1/createnewwallet/` - allows to create new wallet and private key.
 
- * `http://$yourURL.com/alltransactions/` - allows to get all transactions from database.
- * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
- * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
- * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
- * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
- * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
+ * `http://$yourURL.com/api/v1/alltransactions/` - allows to get all transactions from database.
+
+ * `http://$yourURL.com/api/v1/gettransaction/$transactionID` - allows to get transaction details.
+
+ * `http://$yourURL.com/api/v1/getwalletfrompkey/$publicKey` - allows to create new wallet and private key.
+
 
 
 ## POST Endpoints
-  * `http://$yourURL.com/sendcloudcoin/`
+  * `http://$yourURL.com/api/v1/sendcloudcoin/`
   * `sprikey` sender's private key
   * `receiverwalletallows`  receiver's wallet
   * `amount`  and amount.
   ___
-
-  * `http://$yourURL.com/alltransactions/` - allows to get all transactions from database.
-  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
-  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
-  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
-  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
-  * `http://$yourURL.com/createnewwallet/` - allows to create new wallet and private key.
 
 
 ## Donations

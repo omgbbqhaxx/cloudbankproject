@@ -128,7 +128,7 @@ $("#okey").click(function() {
   var amount =  $('#amount').val();
       $.ajax({
         type:'POST',
-        url:'/sendcloudcoin/',
+        url:'/api/v1/sendcloudcoin/',
         data:{
           sprikey : prikey,
           receiverwallet: receiverwallet,
