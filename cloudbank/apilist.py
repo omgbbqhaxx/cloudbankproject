@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 import hashlib
 from django.conf import settings
 from core.models import transaction
-from django.db.models import Avg, Sum, Count
+from django.db.models import Avg, Sum, Count, Q
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey
 
 
@@ -33,7 +33,7 @@ def getbalancefromwallet(request, wallet):
 
 def gbfw(wallet_id):
     income = transaction.objects.filter(receiver=wallet_id).aggregate(Sum('amount'))['amount__sum']
-    outgoing = transaction.objects.filter(sender=wallet_id).aggregate(Sum('amount'))['amount__sum']
+    outgoing = transaction.objects.filter(senderwallet=wallet_id).aggregate(Sum('amount'))['amount__sum']
 
     if income and outgoing:
         # print("user have both")
@@ -55,6 +55,34 @@ def getpublickeyfromprikey(request, private_key):
     data["public_key"] = public_key
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
+
+def getwalletdetails(request, wallet):
+    data = {}
+    incomes = []
+
+    income = transaction.objects.filter(Q(receiver=wallet) |  Q(senderwallet=wallet))
+    #outgoing = transaction.objects.filter(senderwallet=wallet)
+    for trr in income:
+        incomes.append({"sender" : trr.sender,
+                     "senderwallet": trr.senderwallet,
+                     "receiver": trr.receiver,
+                     "prevblockhash": trr.prevblockhash,
+                     "blockhash": trr.blockhash,
+                     "amount": trr.amount,
+                     "nonce": trr.nonce,
+                     "first_timestamp": trr.first_timestamp,
+                     "saved_timestamp": trr.saved_timestamp.strftime("%Y-%m-%d"),
+                     "P2PKH": trr.P2PKH,
+                     "verification": trr.verification})
+
+
+    data['timeline'] = incomes[::-1]
+    data['wallet'] = wallet
+    balance = gbfw(wallet)
+    data['balance'] = balance
+
+
+    return HttpResponse(json.dumps(data), content_type = "application/json")
 
 def gettransaction(request, tid):
         data = {}

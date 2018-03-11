@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'^api/v1/getwalletfrompkey/(?P<pkey>\w+)/$', cloudbank.apilist.getwalletfrompkey, name='getwalletfrompkey'),
     url(r'^api/v1/getpublickeyfromprikey/(?P<private_key>\w+)/$', cloudbank.apilist.getpublickeyfromprikey, name='getpublickeyfromprikey'),
     url(r'^api/v1/getbalancefromwallet/(?P<wallet>\w+)/$', cloudbank.apilist.getbalancefromwallet, name='getbalancefromwallet'),
-
-
+    url(r'^api/v1/getwalletdetails/(?P<wallet>\w+)/$', cloudbank.apilist.getwalletdetails, name='getwalletdetails'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
