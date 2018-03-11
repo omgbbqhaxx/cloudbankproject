@@ -176,6 +176,7 @@ def syncfirst():
             mytransactions = transaction.objects.get(blockhash=x["blockhash"])
         except transaction.DoesNotExist:
             newtrans = transaction(sender=x["sender"],
+                senderwallet=sender=x["senderwallet"],
                 receiver=x["receiver"],
                 prevblockhash=x["prevblockhash"],
                 blockhash=x["blockhash"],

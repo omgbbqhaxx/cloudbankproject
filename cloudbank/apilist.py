@@ -62,6 +62,7 @@ def gettransaction(request, tid):
         data = {}
         trr = transaction.objects.get(id=int(tid))
         data = {"sender" : trr.sender,
+                     "senderwallet": trr.senderwallet,
                      "receiver": trr.receiver,
                      "prevblockhash": trr.prevblockhash,
                      "blockhash": trr.blockhash,
@@ -80,6 +81,7 @@ def alltransactions(request):
     transactions = transaction.objects.all()
     for trr in transactions:
         gettrs = {"sender" : trr.sender,
+                     "senderwallet" : trr.senderwallet,
                      "receiver": trr.receiver,
                      "prevblockhash": trr.prevblockhash,
                      "blockhash": trr.blockhash,
