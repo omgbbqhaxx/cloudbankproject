@@ -15,11 +15,19 @@ from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_p
 
 def getwalletfrompkey(request, pkey):
     data = {}
-    wallet = generate_pubkey_from_prikey(pkey)
+    print(type(pkey))
+    wallet = generate_wallet_from_pkey(pkey)
     data["public_key"] = pkey
     data["wallet"] = wallet
     return HttpResponse(json.dumps(data), content_type = "application/json")
 
+
+def getpublickeyfromprikey(request, private_key):
+    data = {}
+    public_key = generate_pubkey_from_prikey(private_key)
+    data["private_key"] = private_key
+    data["public_key"] = public_key
+    return HttpResponse(json.dumps(data), content_type = "application/json")
 
 
 def gettransaction(request, tid):
