@@ -11,6 +11,7 @@ import hashlib
 from django.conf import settings
 from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey
+from cloudbank.views import getbalance
 
 
 def getwalletfrompkey(request, pkey):
@@ -18,6 +19,15 @@ def getwalletfrompkey(request, pkey):
     print(type(pkey))
     wallet = generate_wallet_from_pkey(pkey)
     data["public_key"] = pkey
+    data["wallet"] = wallet
+    return HttpResponse(json.dumps(data), content_type = "application/json")
+
+
+
+def getbalance(request, wallet):
+    data = {}
+    balance = getbalance(wallet)
+    data["balance"] = balance
     data["wallet"] = wallet
     return HttpResponse(json.dumps(data), content_type = "application/json")
 

@@ -20,8 +20,8 @@ urlpatterns = [
     url(r'^api/v1/alltransactions/', cloudbank.apilist.alltransactions),
     url(r'^api/v1/gettransaction/(?P<tid>\w+)/$', cloudbank.apilist.gettransaction,  name='gettransaction'),
     url(r'^api/v1/getwalletfrompkey/(?P<pkey>\w+)/$', cloudbank.apilist.getwalletfrompkey, name='getwalletfrompkey'),
-    url(r'^api/v1/getpublickeyfromprikey/(?P<private_key>\w+)/$', cloudbank.apilist.getpublickeyfromprikey, name='getpublickeyfromprikey')
-
+    url(r'^api/v1/getpublickeyfromprikey/(?P<private_key>\w+)/$', cloudbank.apilist.getpublickeyfromprikey, name='getpublickeyfromprikey'),
+    url(r'^api/v1/getbalance/(?P<wallet>\w+)/$', cloudbank.apilist.getbalance, name='getbalance'),
 
 
 

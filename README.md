@@ -100,6 +100,9 @@ circusctl quit --waiting
 
  * `http://$yourURL.com/api/v1/getpublickeyfromprikey/$privateKEY` - allows to get public key from private key.
 
+* `http://$yourURL.com/api/v1/getbalance/$wallet` - allows to get last balance from wallet.
+ 
+
 
 
 ## POST Endpoints
