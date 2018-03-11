@@ -10,8 +10,8 @@ from django.contrib.auth import logout
 import hashlib
 from django.conf import settings
 from core.models import transaction
+from django.db.models import Avg, Sum, Count
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey
-from cloudbank.views import getbalance
 
 
 def getwalletfrompkey(request, pkey):
@@ -24,12 +24,30 @@ def getwalletfrompkey(request, pkey):
 
 
 
-def getbalance(request, wallet):
+def getbalancefromwallet(request, wallet):
     data = {}
-    balance = getbalance(wallet)
+    balance = gbfw(wallet)
     data["balance"] = balance
     data["wallet"] = wallet
     return HttpResponse(json.dumps(data), content_type = "application/json")
+
+def gbfw(wallet_id):
+    income = transaction.objects.filter(receiver=wallet_id).aggregate(Sum('amount'))['amount__sum']
+    print(pubkey)
+
+    outgoing = transaction.objects.filter(sender=pubkey).aggregate(Sum('amount'))['amount__sum']
+
+    if income and outgoing:
+        # print("user have both")
+        return(income - outgoing)
+    elif outgoing is None:
+        # print("user dont have  outgoing")
+        return income
+    elif income is None:
+        return 0
+    else:
+        return 0
+
 
 
 def getpublickeyfromprikey(request, private_key):
@@ -54,9 +72,6 @@ def gettransaction(request, tid):
                      "P2PKH": trr.P2PKH,
                      "verification": trr.verification}
         return HttpResponse(json.dumps(data), content_type = "application/json")
-
-
-
 
 
 def alltransactions(request):

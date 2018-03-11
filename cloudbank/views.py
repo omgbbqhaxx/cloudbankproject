@@ -191,8 +191,10 @@ def sendcloudcoin(request):
             print("digital sign ishere", datashash.encode('utf-8'))
             digitalSignature = sk.sign(datashash.encode('utf-8'))
             digitalSignature = json.dumps(digitalSignature.hex())
-
+            
+            wllt = generate_wallet_from_pkey(sender)
             newtrans = transaction(sender=sender,
+            senderwallet=wllt,
             receiver=receiverwallet,
             prevblockhash=transaction.objects.all().last().blockhash,
             blockhash=datashash,

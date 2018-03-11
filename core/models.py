@@ -11,7 +11,8 @@ import pytz, datetime
 
 class transaction(models.Model):
     sender = models.CharField(max_length=5000,null=False) #Sender's PUBLIC KEY.
-    receiver = models.CharField(max_length=5000,null=False) #Receivers's PUBLIC KEY.
+    senderwallet = models.CharField(max_length=5000,null=False) #Sender's PUBLIC KEY.
+    receiver = models.CharField(max_length=5000,null=False)
     prevblockhash = models.CharField(max_length=5000,null=False)
     blockhash = models.CharField(max_length=5000,null=False)
     amount = models.IntegerField(null=False)
@@ -21,4 +22,4 @@ class transaction(models.Model):
     P2PKH = models.CharField(max_length=5000,null=False)
     verification = models.BooleanField(blank=True)
     def __str__(self):
-        return("BlockHash : %s "% (self.blockhash))
+        return("sender : %s "% (self.sender))
