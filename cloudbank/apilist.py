@@ -33,9 +33,7 @@ def getbalancefromwallet(request, wallet):
 
 def gbfw(wallet_id):
     income = transaction.objects.filter(receiver=wallet_id).aggregate(Sum('amount'))['amount__sum']
-    print(pubkey)
-
-    outgoing = transaction.objects.filter(sender=pubkey).aggregate(Sum('amount'))['amount__sum']
+    outgoing = transaction.objects.filter(sender=wallet_id).aggregate(Sum('amount'))['amount__sum']
 
     if income and outgoing:
         # print("user have both")

@@ -125,7 +125,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                     print("datahashhere", datashash.encode('utf-8'))
                     print("sigbyte is here", sig)
                     print("sende weas here", payloaded["sender"])
-
+                    wllt = generate_wallet_from_pkey(payloaded["sender"])
                     try:
                         sigbyte =  bytes.fromhex(sig)
                         vk = VerifyingKey.from_string(bytes.fromhex(payloaded["sender"]), curve=SECP256k1)
@@ -134,6 +134,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                         print("unbelieveable")
                         data["response"] = "unbelieveable"
                         newtrans = transaction(sender=payloaded["sender"],
+                        senderwallet=wllt,
                         receiver=payloaded["receiver"],
                         prevblockhash=transaction.objects.all().last().blockhash,
                         blockhash=payloaded["blockhash"],
@@ -146,6 +147,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                         print("badsignature")
 
                     newtrans = transaction(sender=payloaded["sender"],
+                    senderwallet=wllt,
                     receiver=payloaded["receiver"],
                     prevblockhash=transaction.objects.all().last().blockhash,
                     blockhash=payloaded["blockhash"],
@@ -176,7 +178,7 @@ def syncfirst():
             mytransactions = transaction.objects.get(blockhash=x["blockhash"])
         except transaction.DoesNotExist:
             newtrans = transaction(sender=x["sender"],
-                senderwallet=sender=x["senderwallet"],
+                senderwallet=x["senderwallet"],
                 receiver=x["receiver"],
                 prevblockhash=x["prevblockhash"],
                 blockhash=x["blockhash"],
