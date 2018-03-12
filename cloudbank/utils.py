@@ -63,20 +63,20 @@ def checkreward(wallet):
 
 
 def addreward(wallet):
-
     utc = arrow.utcnow()
     local = utc.to('GMT')
     first_timestamp = local.timestamp
-
+    nonce = miner(first_timestamp, settings.REWARD_HASH, receiverhex, 100)
+    blockhash = gethash(settings.REWARD_HASH, wallet, 100, first_timestamp, nonce)
     newtrans = transaction(sender=settings.REWARD_HASH,
     senderwallet=settings.REWARD_HASH,
     receiver=wallet,
     prevblockhash=transaction.objects.all().last().blockhash,
-    blockhash=settings.REWARD_HASH,
+    blockhash=blockhash,
     amount=100,
-    nonce=0,
+    nonce=nonce,
     first_timestamp=first_timestamp,
-    P2PKH=settings.REWARD_HASH,
+    P2PKH="reward",
     verification=True
     ).save()
 
@@ -85,15 +85,47 @@ def addzeroward(wallet):
     utc = arrow.utcnow()
     local = utc.to('GMT')
     first_timestamp = local.timestamp
-
+    nonce = miner(first_timestamp, settings.REWARD_HASH, receiverhex, 100)
+    blockhash = gethash(settings.REWARD_HASH, wallet, 100, first_timestamp, nonce)
     newtrans = transaction(sender=settings.REWARD_HASH,
     senderwallet=settings.REWARD_HASH,
     receiver=wallet,
     prevblockhash=transaction.objects.all().last().blockhash,
     blockhash=settings.REWARD_HASH,
     amount=100,
-    nonce=0,
+    nonce=nonce,
     first_timestamp=first_timestamp,
-    P2PKH=settings.REWARD_HASH,
+    P2PKH="reward",
     verification=True
     ).save()
+
+
+
+def miner(first_timestamp, senderwalletid, receiverhex,amount):
+    data = {}
+    for nonce in range(0,10000000):
+        data['sender'] = str(senderwalletid)                                        #1
+        data['receiver'] = str(receiverhex)                                         #2
+        data['previous_hash'] =  str(transaction.objects.all().last().blockhash)    #3
+        data['amount'] = str(amount)                                                #4
+        data['timestamp'] =  str(first_timestamp)                                   #5
+        data["nonce"] = str(nonce)
+        data = collections.OrderedDict(sorted(data.items()))
+        datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()
+        last2char = datashash[-2:]
+        if last2char == "01":
+            return(nonce)
+        else:
+            # print(nonce)
+            continue
+
+def gethash(senderwalletid, receiverhex, amount, first_timestamp, nonce):
+    data['sender'] = str(senderwalletid)                                        #1
+    data['receiver'] = str(receiverhex)                                         #2
+    data['previous_hash'] =  str(transaction.objects.all().last().blockhash)    #3
+    data['amount'] = str(amount)                                                #4
+    data['timestamp'] =  str(first_timestamp)                                   #5
+    data["nonce"] = str(nonce)
+    data = collections.OrderedDict(sorted(data.items()))
+    datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()
+    return datashash
