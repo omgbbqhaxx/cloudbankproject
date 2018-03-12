@@ -1,11 +1,12 @@
 #-*- coding: utf-8 -*-
-import sys, bson, json, pickle
-
+import sys, bson, json, pickle, arrow
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
 from twisted.web.static import File
 import netifaces as ni
+from cloudbank.wsgi import application as wsgi_handler
+django.setup()
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
 
 
