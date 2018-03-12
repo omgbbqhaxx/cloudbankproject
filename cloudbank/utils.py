@@ -43,7 +43,7 @@ def checkreward():
    local = utc.to('GMT')
    first_timestamp = local.timestamp
 
-   tenminutes = utc.shift(minutes=-settingsREWARD_TIME)
+   tenminutes = utc.shift(minutes=-settings.REWARD_TIME)
    tenlocal = tenminutes.to('GMT')
    tmago = tenlocal.timestamp
    checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
