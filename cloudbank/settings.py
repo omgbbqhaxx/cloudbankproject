@@ -24,10 +24,11 @@ SECRET_KEY = 'j54w1jdm@o(7vmnv=9_duz$c8zg-brf3z%i8yf%9@o(@k4fezu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','159.89.197.53','159.65.89.225','cloudbankproject.com','www.cloudbankproject.com']
+ALLOWED_HOSTS = ['localhost','159.89.197.53','159.65.89.225','bitjoin','cloudbankproject.com','www.cloudbankproject.com']
 #Currency and Node definations
 CURRENCY = "CC"
 NODE_OWNER_WALLET = "CC2d7cf4fca49fb0d2c5d2bc7113ce3376"
+REWARD_HASH = "4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a"
 
 
 # Application definition

@@ -32,3 +32,26 @@ def generate_pubkey_from_prikey(private_key):
     except UnicodeDecodeError:
         return  "Check your wallet details"
     return vk.to_string().hex()
+
+
+def checkreward(wallet):
+   #settings.REWARD_HASH
+   utc = arrow.utcnow()
+   local = utc.to('GMT')
+   first_timestamp = local.timestamp
+
+   tenminutes = utc.shift(minutes=-10)
+   tenlocal = tenminutes.to('GMT')
+   tmago = tenlocal.timestamp
+
+   try:
+       checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
+   except transaction.DoesNotExist:
+       print("0 adet coin kazanacak en başta")
+
+   if (checklastreward[0].first_timestamp > tmago):
+       print("10 dakika geçmiş demektir")
+   else:
+       print("daha on dakika dolmamış demektir.")
+
+   return "utils works correctly"

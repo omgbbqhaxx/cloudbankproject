@@ -6,6 +6,10 @@ from twisted.python import log
 from twisted.web.server import Site
 from twisted.web.static import File
 import netifaces as ni
+from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
+
+
+
 
 from autobahn.twisted.websocket import WebSocketClientProtocol, \
     WebSocketClientFactory
@@ -106,7 +110,7 @@ class MyClientProtocol(WebSocketClientProtocol):
 
 
 if __name__ == '__main__':
-    print("here works one times..")
+    print("start")
     ServerFactory = BroadcastServerFactory
     factory = ServerFactory(u"ws://127.0.0.1:9000")
     factory.protocol = BroadcastServerProtocol

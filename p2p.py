@@ -9,8 +9,8 @@ from twisted.web.static import File
 import netifaces as ni
 from cloudbank.wsgi import application as wsgi_handler
 django.setup()
-
 from core.models import transaction
+from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
 
 from autobahn.twisted.websocket import WebSocketClientProtocol, \
     WebSocketClientFactory
@@ -110,6 +110,7 @@ class MyClientProtocol(WebSocketClientProtocol):
             if str(payloaded["host"]) == str(ip):
                 print("bu zaten sensin")
             else:
+                checkreward()
                 payloaded = json.loads(payload.decode('utf-8'))
                 if 'sender' in payloaded:
                     data['sender'] = str(payloaded["sender"])                                       #1
