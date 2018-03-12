@@ -134,12 +134,12 @@ $("#okey").click(function() {
           receiverwallet: receiverwallet,
   				amount:parseInt(amount)},
         success:function(msg){
-          if(msg["response"] == "response"){
+          $('#receiverwallet').val('');
+          $('#amount').val('');
+          if(msg["response"] == "ok"){
             Messenger().post(msg["explain"]);
-          }else{
-            $('#pubkey').val('');
-            $('#amount').val('');
 
+          }else{
             Messenger().post(msg["explain"]);
             //window.location.reload();
           }

@@ -191,7 +191,7 @@ def sendcloudcoin(request):
             print("digital sign ishere", datashash.encode('utf-8'))
             digitalSignature = sk.sign(datashash.encode('utf-8'))
             digitalSignature = json.dumps(digitalSignature.hex())
-            
+
             wllt = generate_wallet_from_pkey(sender)
             newtrans = transaction(sender=sender,
             senderwallet=wllt,
@@ -227,8 +227,9 @@ def sendcloudcoin(request):
             wsip = "ws://{}:9000".format(ip)
             ws.connect(wsip)
             ws.send(payload)
-
             allify['response'] = "ok"
+            allify['explain'] = "You currency transfered successfuly"
+            
             allify['datashash'] = datashash
             allify['datastring'] = json.dumps(allify)
             return HttpResponse(json.dumps(allify), content_type = "application/json")
