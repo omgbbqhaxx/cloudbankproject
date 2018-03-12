@@ -49,12 +49,13 @@ def checkreward(wallet):
    checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
    if not checklastreward:
        addzeroward(wallet)
+       return "node has been added to network"
    else:
        if (checklastreward[0].first_timestamp > tmago):
-           print("10 dakika geçmiş demektir")
            addreward(wallet)
+           return  "congratulations you can earn your coins"
        else:
-           print("daha on dakika dolmamış demektir.")
+           return "you need wait"
 
        return "utils works correctly"
 
