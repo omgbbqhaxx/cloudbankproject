@@ -110,9 +110,10 @@ class MyClientProtocol(WebSocketClientProtocol):
             if str(payloaded["host"]) == str(ip):
                 print("bu zaten sensin")
             else:
-                checkreward()
+
                 payloaded = json.loads(payload.decode('utf-8'))
                 if 'sender' in payloaded:
+
                     data['sender'] = str(payloaded["sender"])                                       #1
                     data['receiver'] = str(payloaded["receiver"])                                   #2
                     data['previous_hash'] = str(transaction.objects.all().last().blockhash)         #3
@@ -127,6 +128,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                     print("sigbyte is here", sig)
                     print("sende weas here", payloaded["sender"])
                     wllt = generate_wallet_from_pkey(payloaded["sender"])
+                    checkreward(wllt)
                     try:
                         sigbyte =  bytes.fromhex(sig)
                         vk = VerifyingKey.from_string(bytes.fromhex(payloaded["sender"]), curve=SECP256k1)
