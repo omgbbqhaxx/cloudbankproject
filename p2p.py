@@ -128,7 +128,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                     print("sigbyte is here", sig)
                     print("sende weas here", payloaded["sender"])
                     wllt = generate_wallet_from_pkey(payloaded["sender"])
-                    print(checkreward(wllt))
+                    print(checkreward())
                     try:
                         sigbyte =  bytes.fromhex(sig)
                         vk = VerifyingKey.from_string(bytes.fromhex(payloaded["sender"]), curve=SECP256k1)

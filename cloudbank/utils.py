@@ -37,7 +37,7 @@ def generate_pubkey_from_prikey(private_key):
     return vk.to_string().hex()
 
 
-def checkreward(wallet):
+def checkreward():
    #settings.REWARD_HASH
    utc = arrow.utcnow()
    local = utc.to('GMT')
@@ -48,11 +48,11 @@ def checkreward(wallet):
    tmago = tenlocal.timestamp
    checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
    if not checklastreward:
-       addzeroward(wallet)
+       addzeroward()
        return "node has been added to network"
    else:
        if (checklastreward[0].first_timestamp > tmago):
-           addreward(wallet)
+           addreward()
            return  "congratulations you can earn your coins"
        else:
            return "you need wait"
@@ -63,15 +63,15 @@ def checkreward(wallet):
 
 
 
-def addreward(wallet):
+def addreward():
     utc = arrow.utcnow()
     local = utc.to('GMT')
     first_timestamp = local.timestamp
-    nonce = miner(first_timestamp, settings.REWARD_HASH, wallet, 100)
-    blockhash = gethash(settings.REWARD_HASH, wallet, 100, first_timestamp, nonce)
+    nonce = miner(first_timestamp, settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 100)
+    blockhash = gethash(settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 100, first_timestamp, nonce)
     newtrans = transaction(sender=settings.REWARD_HASH,
     senderwallet=settings.REWARD_HASH,
-    receiver=wallet,
+    receiver=settings.NODE_OWNER_WALLET,
     prevblockhash=transaction.objects.all().last().blockhash,
     blockhash=blockhash,
     amount=100,
@@ -81,15 +81,15 @@ def addreward(wallet):
     verification=True
     ).save()
 
-def addzeroward(wallet):
+def addzeroward():
     utc = arrow.utcnow()
     local = utc.to('GMT')
     first_timestamp = local.timestamp
-    nonce = miner(first_timestamp, settings.REWARD_HASH, wallet, 100)
-    blockhash = gethash(settings.REWARD_HASH, wallet, 0, first_timestamp, nonce)
+    nonce = miner(first_timestamp, settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 100)
+    blockhash = gethash(settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 0, first_timestamp, nonce)
     newtrans = transaction(sender=settings.REWARD_HASH,
     senderwallet=settings.REWARD_HASH,
-    receiver=wallet,
+    receiver=settings.NODE_OWNER_WALLET,
     prevblockhash=transaction.objects.all().last().blockhash,
     blockhash=blockhash,
     amount=0,
