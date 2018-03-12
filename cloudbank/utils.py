@@ -66,7 +66,7 @@ def addreward(wallet):
     utc = arrow.utcnow()
     local = utc.to('GMT')
     first_timestamp = local.timestamp
-    nonce = miner(first_timestamp, settings.REWARD_HASH, receiverhex, 100)
+    nonce = miner(first_timestamp, settings.REWARD_HASH, wallet, 100)
     blockhash = gethash(settings.REWARD_HASH, wallet, 100, first_timestamp, nonce)
     newtrans = transaction(sender=settings.REWARD_HASH,
     senderwallet=settings.REWARD_HASH,
@@ -85,7 +85,7 @@ def addzeroward(wallet):
     utc = arrow.utcnow()
     local = utc.to('GMT')
     first_timestamp = local.timestamp
-    nonce = miner(first_timestamp, settings.REWARD_HASH, receiverhex, 100)
+    nonce = miner(first_timestamp, settings.REWARD_HASH, wallet, 100)
     blockhash = gethash(settings.REWARD_HASH, wallet, 100, first_timestamp, nonce)
     newtrans = transaction(sender=settings.REWARD_HASH,
     senderwallet=settings.REWARD_HASH,
