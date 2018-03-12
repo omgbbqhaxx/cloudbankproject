@@ -120,6 +120,7 @@ def miner(first_timestamp, senderwalletid, receiverhex,amount):
             continue
 
 def gethash(senderwalletid, receiverhex, amount, first_timestamp, nonce):
+    data = {}
     data['sender'] = str(senderwalletid)                                        #1
     data['receiver'] = str(receiverhex)                                         #2
     data['previous_hash'] =  str(transaction.objects.all().last().blockhash)    #3
