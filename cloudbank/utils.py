@@ -46,23 +46,17 @@ def checkreward(wallet):
    tenminutes = utc.shift(minutes=-10)
    tenlocal = tenminutes.to('GMT')
    tmago = tenlocal.timestamp
-
-   try:
-       checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
-   except transaction.DoesNotExist:
-       print("0 adet coin kazanacak en başta")
+   checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
+   if not checklastreward:
        addzeroward(wallet)
+   else:
+       if (checklastreward[0].first_timestamp > tmago):
+           print("10 dakika geçmiş demektir")
+           addreward(wallet)
+       else:
+           print("daha on dakika dolmamış demektir.")
 
-       
-   print(checklastreward)
-
-   # if (checklastreward[0].first_timestamp > tmago):
-   #     print("10 dakika geçmiş demektir")
-   #     addreward(wallet)
-   # else:
-   #     print("daha on dakika dolmamış demektir.")
-   #
-   # return "utils works correctly"
+       return "utils works correctly"
 
 
 
