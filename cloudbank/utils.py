@@ -53,13 +53,16 @@ def checkreward(wallet):
        print("0 adet coin kazanacak en başta")
        addzeroward(wallet)
 
-   if (checklastreward[0].first_timestamp > tmago):
-       print("10 dakika geçmiş demektir")
-       addreward(wallet)
-   else:
-       print("daha on dakika dolmamış demektir.")
+       
+   print(checklastreward)
 
-   return "utils works correctly"
+   # if (checklastreward[0].first_timestamp > tmago):
+   #     print("10 dakika geçmiş demektir")
+   #     addreward(wallet)
+   # else:
+   #     print("daha on dakika dolmamış demektir.")
+   #
+   # return "utils works correctly"
 
 
 
