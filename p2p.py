@@ -33,25 +33,21 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
     def onOpen(self):
         self.factory.register(self)
 
-    def onMessage(self, payload, isBinary):
+    def onMessage(self, payload):
         print("payloadXx",payload)
-        print("isBinaryxX",isBinary)
+        print("isBinaryxX",type(isBinary))
+        myjson = json.loads(payload)
 
-        if not isBinary:
-            print("isBinary olmak zorunda")
-            print(json.loads(payload))
+        print(myjson)
+
+        if myjson["server"]:
+            print("that message came from server")
+            addnewnode(myjson["host"])
         else:
-            print(payload)
-            print(json.loads(payload))
-            myjson = json.loads(payload)
-            if myjson["server"]:
-                print("that message came from server")
-                addnewnode(myjson["host"])
-            else:
-                print(myjson["message"])
-                myjson["host"] = ip
-                myjson = json.dumps(myjson)
-                self.factory.broadcast(myjson)
+            print(myjson["message"])
+            myjson["host"] = ip
+            myjson = json.dumps(myjson)
+            self.factory.broadcast(myjson)
 
     def connectionLost(self, reason):
         WebSocketServerProtocol.connectionLost(self, reason)
