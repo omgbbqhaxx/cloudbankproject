@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-import sys, json, requests, django ,os ,base64, collections,hashlib, math
+import sys, json, requests, django ,os ,base64, collections,hashlib, math, mimetypes
 from django.utils.encoding import smart_str
 from ecdsa import SigningKey, SECP256k1, NIST384p, BadSignatureError, VerifyingKey
 from twisted.internet import reactor
@@ -34,8 +34,9 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         self.factory.register(self)
 
     def onMessage(self, payload, isBinary):
+        mime = mimetypes.guess_type(payload)
         print("payloadXx",isBinary)
-        print("isBinaryxX",type(payload))
+        print("isBinaryxX", mime)
         print(isBinary)
         if type(payload) == "bytes":
             payload = payload.decode('utf-8')
