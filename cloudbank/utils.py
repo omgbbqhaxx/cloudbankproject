@@ -38,12 +38,12 @@ def generate_pubkey_from_prikey(private_key):
 
 
 def checkreward():
-   checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
+   checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET).last()
    if not checklastreward:
         addreward()
         return "node has been added to network"
    else:
-       registerd_time = checklastreward[0].first_timestamp
+       registerd_time = checklastreward.first_timestamp
        oldtime = arrow.get(registerd_time).shift(minutes=+settings.REWARD_TIME).to("GMT").timestamp
        lasttime = arrow.utcnow().to("GMT").timestamp
 
