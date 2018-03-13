@@ -34,8 +34,12 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         self.factory.register(self)
 
     def onMessage(self, payload, isBinary):
+        print("payloadXx",payload)
+        print("isBinaryxX",isBinary)
+
         if not isBinary:
             print("isBinary olmak zorunda")
+            print(json.loads(payload))
         else:
             print(payload)
             print(json.loads(payload))
