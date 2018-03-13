@@ -38,15 +38,9 @@ def generate_pubkey_from_prikey(private_key):
 
 
 def checkreward():
-   #settings.REWARD_HASH
-   utc = arrow.utcnow()
-   local = utc.to('GMT')
-   first_timestamp = local.timestamp
-
-
    checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
    if not checklastreward:
-        addzeroward()
+        addreward()
         return "node has been added to network"
    else:
        registerd_time = checklastreward[0].first_timestamp
@@ -55,11 +49,11 @@ def checkreward():
 
        if (oldtime < lasttime):
            addreward()
-           return  "congratulations you can earn your coins" + str(oldtime) + " and " + str(lasttime)
+           return  "congratulations you can earn your coins " + str(oldtime) + " and " + str(lasttime)
        else:
-           return "you need wait" + str(oldtime) + " and " + str(lasttime)
+           return "you need waitv" + str(oldtime) + " and " + str(lasttime)
 
-       return "utils works correctly" + str(oldtime) + " and " + str(lasttime)
+       return "utils works correctly " + str(oldtime) + " and " + str(lasttime)
 
 
 
@@ -77,24 +71,6 @@ def addreward():
     prevblockhash=transaction.objects.all().last().blockhash,
     blockhash=blockhash,
     amount=100,
-    nonce=nonce,
-    first_timestamp=first_timestamp,
-    P2PKH="reward",
-    verification=True
-    ).save()
-
-def addzeroward():
-    utc = arrow.utcnow()
-    local = utc.to('GMT')
-    first_timestamp = local.timestamp
-    nonce = miner(first_timestamp, settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 100)
-    blockhash = gethash(settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 0, first_timestamp, nonce)
-    newtrans = transaction(sender=settings.REWARD_HASH,
-    senderwallet=settings.REWARD_HASH,
-    receiver=settings.NODE_OWNER_WALLET,
-    prevblockhash=transaction.objects.all().last().blockhash,
-    blockhash=blockhash,
-    amount=0,
     nonce=nonce,
     first_timestamp=first_timestamp,
     P2PKH="reward",
