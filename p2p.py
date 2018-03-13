@@ -34,10 +34,12 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         self.factory.register(self)
 
     def onMessage(self, payload, isBinary):
-        print("payloadXx",payload)
+        print("payloadXx",isBinary)
         print("isBinaryxX",type(payload))
-        if not isBinary:
-            print("isBinary olmak zorunda")
+        print(isBinary)
+        try:
+            data = payload.decode('utf-8')
+        except AttributeError:
             print(payload)
             print(json.loads(payload))
             myjson = json.loads(payload)
@@ -49,20 +51,20 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 myjson["host"] = ip
                 myjson = json.dumps(myjson)
                 self.factory.broadcast(myjson)
-
-
+        print("isBinary olmak zorunda")
+        payload = payload.encode('utf-8')
+        print(json.loads(payload))
+        myjson = json.loads(payload)
+        if myjson["server"]:
+            print("that message came from server")
+            addnewnode(myjson["host"])
         else:
-            print(payload)
-            print(json.loads(payload))
-            myjson = json.loads(payload)
-            if myjson["server"]:
-                print("that message came from server")
-                addnewnode(myjson["host"])
-            else:
-                print(myjson["message"])
-                myjson["host"] = ip
-                myjson = json.dumps(myjson)
-                self.factory.broadcast(myjson)
+            print(myjson["message"])
+            myjson["host"] = ip
+            myjson = json.dumps(myjson)
+            self.factory.broadcast(myjson)
+
+
 
     def connectionLost(self, reason):
         WebSocketServerProtocol.connectionLost(self, reason)
