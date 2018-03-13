@@ -55,11 +55,11 @@ def checkreward():
 
        if (oldtime < lasttime):
            addreward()
-           return  "congratulations you can earn your coins" + oldtime + " and " + lasttime
+           return  "congratulations you can earn your coins" + str(oldtime) + " and " + str(lasttime)
        else:
-           return "you need wait" + oldtime + " and " + lasttime
+           return "you need wait" + str(oldtime) + " and " + str(lasttime)
 
-       return "utils works correctly" + oldtime + " and " + lasttime
+       return "utils works correctly" + str(oldtime) + " and " + str(lasttime)
 
 
 
