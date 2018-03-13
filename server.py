@@ -41,7 +41,6 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         self.factory.register(self)
 
     def onMessage(self, payload, isBinary):
-            print("selam ", payload)
             print("selam ", payload.decode('utf-8'))
             payload = json.loads(payload.decode('utf-8'))
 
@@ -102,6 +101,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                 print("bu zaten sensin")
             else:
                 payload = json.dumps(payload)
+                print(payload)
                 BroadcastServerFactory.broadcast(payload)
 
     def onClose(self, wasClean, code, reason):
