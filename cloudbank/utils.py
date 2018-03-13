@@ -43,15 +43,17 @@ def checkreward():
    local = utc.to('GMT')
    first_timestamp = local.timestamp
 
-   tenminutes = utc.shift(minutes=-settings.REWARD_TIME)
-   tenlocal = tenminutes.to('GMT')
-   tmago = tenlocal.timestamp
+
    checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET)
    if not checklastreward:
-       addzeroward()
-       return "node has been added to network"
+        addzeroward()
+        return "node has been added to network"
    else:
-       if (checklastreward[0].first_timestamp < tmago):
+       registerd_time = checklastreward[0].first_timestamp
+       oldtime = arrow.get(registerd_time).shift(minutes=+settings.REWARD_TIME).to("GMT").timestamp
+       lasttime = arrow.utcnow().to("GMT").timestamp
+
+       if (oldtime < lasttime):
            addreward()
            return  "congratulations you can earn your coins"
        else:
