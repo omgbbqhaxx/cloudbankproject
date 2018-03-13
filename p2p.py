@@ -51,8 +51,9 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 myjson["host"] = ip
                 myjson = json.dumps(myjson)
                 self.factory.broadcast(myjson)
+
+
         print("isBinary olmak zorunda")
-        payload = payload.encode('utf-8')
         print(json.loads(payload))
         myjson = json.loads(payload)
         if myjson["server"]:
