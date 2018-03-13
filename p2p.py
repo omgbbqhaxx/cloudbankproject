@@ -37,9 +37,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         print("payloadXx",isBinary)
         print("isBinaryxX",type(payload))
         print(isBinary)
-        try:
-            data = payload.decode('utf-8')
-        except AttributeError:
+        if type(payload) == "bytes":
+            payload = payload.decode('utf-8')
             print(payload)
             print(json.loads(payload))
             myjson = json.loads(payload)
@@ -51,19 +50,17 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 myjson["host"] = ip
                 myjson = json.dumps(myjson)
                 self.factory.broadcast(myjson)
-
-
-        print("isBinary olmak zorunda")
-        print(json.loads(payload))
-        myjson = json.loads(payload)
-        if myjson["server"]:
-            print("that message came from server")
-            addnewnode(myjson["host"])
         else:
-            print(myjson["message"])
-            myjson["host"] = ip
-            myjson = json.dumps(myjson)
-            self.factory.broadcast(myjson)
+            print(json.loads(payload))
+            myjson = json.loads(payload)
+            if myjson["server"]:
+                print("that message came from server")
+                addnewnode(myjson["host"])
+            else:
+                print(myjson["message"])
+                myjson["host"] = ip
+                myjson = json.dumps(myjson)
+                self.factory.broadcast(myjson)
 
 
 
