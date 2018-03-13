@@ -35,10 +35,22 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
 
     def onMessage(self, payload, isBinary):
         print("payloadXx",payload)
-        print("isBinaryxX",type(isBinary))
+        print("isBinaryxX",type(payload))
         if not isBinary:
             print("isBinary olmak zorunda")
             print(payload)
+            print(json.loads(payload))
+            myjson = json.loads(payload)
+            if myjson["server"]:
+                print("that message came from server")
+                addnewnode(myjson["host"])
+            else:
+                print(myjson["message"])
+                myjson["host"] = ip
+                myjson = json.dumps(myjson)
+                self.factory.broadcast(myjson)
+
+
         else:
             print(payload)
             print(json.loads(payload))
