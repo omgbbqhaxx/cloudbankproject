@@ -118,6 +118,7 @@ class MyClientProtocol(WebSocketClientProtocol):
         if isBinary:
             print("Binary message received: {0} bytes".format(len(payload)))
         else:
+            print("am i here...")
             payloaded = json.loads(payload.decode('utf-8'))
             print(payloaded["host"])
             if str(payloaded["host"]) == str(ip):
