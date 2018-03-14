@@ -176,7 +176,7 @@ class MyClientProtocol(WebSocketClientProtocol):
 
                 else:
                     print("other message")
-                BroadcastServerFactory.broadcast(payload)
+                BroadcastServerFactory.broadcast(payloaded)
 
     def onClose(self, wasClean, code, reason):
         print("WebSocket connection closed: {0}".format(reason))
