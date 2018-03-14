@@ -100,7 +100,12 @@ class BroadcastServerFactory(WebSocketServerFactory):
             print("im at broadcast",msg)
             print("im at broadcast type msg", type(msg))
             print("messaj disaridan aldim {}".format(c.peer))
-            c.sendMessage(msg.encode('utf8')) #.encode('utf8') str object no decode
+            if isinstance(msg, dict):
+                c.sendMessage(msg) #.encode('utf8') str object no decode
+            else:
+                c.sendMessage(msg.encode('utf8')) #.encode('utf8') str object no decode
+
+
 
 
 
