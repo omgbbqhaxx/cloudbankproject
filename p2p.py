@@ -41,6 +41,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             print(type(payload))
             print("itsa binaryy", payload)
         else:
+            print(type(payload))
             print("it isnot binary", payload)
             print(json.loads(payload))
             myjson = json.loads(payload)
