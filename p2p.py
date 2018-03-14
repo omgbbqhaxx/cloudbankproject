@@ -37,7 +37,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         if not isBinary:
             print(type(payload))
             print(payload)
-            payload = payload.encode('utf-8')
+            payload = payload.decode('utf-8')
             print(type(payload))
             print(payload)
             print("isBinary olmak zorunda")
