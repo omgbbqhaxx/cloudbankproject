@@ -38,11 +38,15 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             print(type(payload))
             print(payload)
             payload = payload.decode('utf-8')
-            print(type(payload))
-            print(payload)
-            print("isBinary olmak zorunda")
-
-
+            myjson = json.loads(payload)
+            if myjson["server"]:
+                print("that message came from server")
+                addnewnode(myjson["host"])
+            else:
+                print(myjson["message"])
+                myjson["host"] = ip
+                myjson = json.dumps(myjson)
+                self.factory.broadcast(myjson)
         else:
             print(payload)
             print(json.loads(payload))
