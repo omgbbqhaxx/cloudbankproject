@@ -125,7 +125,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                 print("bu zaten sensin")
             else:
                 #payload = json.dumps(payload)
-                print("Buradayım", type(payload))
+                print("im here now", type(payload))
                 print("Uzak serverdan yeni mesaj geldi",payload)
                 #BroadcastServerFactory.broadcast(payload)
 
