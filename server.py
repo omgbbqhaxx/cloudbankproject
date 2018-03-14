@@ -64,7 +64,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     self.factory.broadcast(payload)
             else:
                 print("selam ", payload)
-                print("testfigfsa ", payload.encode('utf8'))
+                print("testfigfsa ", payload)
                 payload = json.loads(payload)
                 if payload["server"]:
                     print("bu mesaj serverdan gelmis demek")

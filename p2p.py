@@ -46,7 +46,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         print(isBinary)
         if not isBinary:
             print(type(payload))
-            #omg
+            #omg getting from server and thats already binary...
             myjson = json.loads(payload.decode('utf8'))
             if myjson["server"]:
                 print("that message came from server")
