@@ -102,7 +102,7 @@ class BroadcastServerFactory(WebSocketServerFactory):
             print("messaj disaridan aldim {}".format(c.peer))
             if isinstance(msg, dict):
                 print("class is dict")
-                msg = json.dumps(msg)
+                msg = json.dumps(msg).encode('utf8')
                 c.sendMessage(msg)
             else:
                 c.sendMessage(msg.encode('utf-8')) #.encode('utf8') str object no decode
