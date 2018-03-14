@@ -98,9 +98,9 @@ class BroadcastServerFactory(WebSocketServerFactory):
     def broadcast(self, msg):
         for c in clients:
             print("broadcast", msg)
-            #msg = json.dumps(msg)
+            #msg = json.dumps(msg) .encode('utf8')
             print("i get a message from outside {}".format(c.peer))
-            c.sendMessage(msg.encode('utf8'))
+            c.sendMessage(msg)
 
 
 class MyClientProtocol(WebSocketClientProtocol):
