@@ -101,9 +101,11 @@ class BroadcastServerFactory(WebSocketServerFactory):
             print("im at broadcast type msg", type(msg))
             print("messaj disaridan aldim {}".format(c.peer))
             if isinstance(msg, dict):
-                c.sendMessage(msg) #.encode('utf8') str object no decode
+                print("class is dict")
+                #msg = json.dumps(msg)
+                c.sendMessage(msg)
             else:
-                c.sendMessage(msg.encode('utf8')) #.encode('utf8') str object no decode
+                c.sendMessage(msg.encode('utf-8')) #.encode('utf8') str object no decode
 
 
 
