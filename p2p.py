@@ -88,7 +88,8 @@ class BroadcastServerFactory(WebSocketServerFactory):
     @classmethod
     def broadcast(self, msg):
         for c in clients:
-            msg = "ok"
+            print(type(msg))
+            print(type(msg))
             c.sendMessage(msg)
             print("messaj disaridan aldim {}".format(c.peer))
 
