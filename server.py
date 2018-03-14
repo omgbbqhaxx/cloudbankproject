@@ -97,10 +97,11 @@ class BroadcastServerFactory(WebSocketServerFactory):
     @classmethod
     def broadcast(self, msg):
         for c in clients:
-            print("broadcast", msg)
-            #msg = json.dumps(msg) .encode('utf8')
-            print("i get a message from outside {}".format(c.peer))
-            c.sendMessage(msg)
+            print("im at broadcast",msg)
+            print("im at broadcast type msg", type(msg))
+            #c.sendMessage(msg) .encode('utf8')
+            print("messaj disaridan aldim {}".format(c.peer))
+
 
 
 class MyClientProtocol(WebSocketClientProtocol):
