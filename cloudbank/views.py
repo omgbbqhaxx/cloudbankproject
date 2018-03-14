@@ -206,7 +206,7 @@ def sendcloudcoin(request):
             )
             newtrans.save()
             ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
-            geturl = "http://{}/api/vi/gettransaction/{}/".format(ip,newtrans.id)
+            geturl = "http://{}/api/v1/gettransaction/{}/".format(ip,newtrans.id)
             test = {"server":False,
             "sender":sender,
             "receiver":receiverwallet,
@@ -229,7 +229,7 @@ def sendcloudcoin(request):
             ws.send(payload)
             allify['response'] = "ok"
             allify['explain'] = "You currency transfered successfuly"
-            
+
             allify['datashash'] = datashash
             allify['datastring'] = json.dumps(allify)
             return HttpResponse(json.dumps(allify), content_type = "application/json")

@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-import sys, json, requests, django ,os ,base64, collections,hashlib, math, mimetypes
+import sys, json, requests, django ,os ,base64, collections,hashlib, math
 from django.utils.encoding import smart_str
 from ecdsa import SigningKey, SECP256k1, NIST384p, BadSignatureError, VerifyingKey
 from twisted.internet import reactor
@@ -34,12 +34,11 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         self.factory.register(self)
 
     def onMessage(self, payload, isBinary):
-        mime = mimetypes.guess_type(payload)
-        print("payloadXx",isBinary)
-        print("isBinaryxX", mime)
-        print(isBinary)
-        if type(payload) == "bytes":
-            payload = payload.decode('utf-8')
+        if not isBinary:
+            print(type(payload))
+            print(payload)
+            print("isBinary olmak zorunda")
+        else:
             print(payload)
             print(json.loads(payload))
             myjson = json.loads(payload)
@@ -51,23 +50,11 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                 myjson["host"] = ip
                 myjson = json.dumps(myjson)
                 self.factory.broadcast(myjson)
-        else:
-            print(json.loads(payload))
-            myjson = json.loads(payload)
-            if myjson["server"]:
-                print("that message came from server")
-                addnewnode(myjson["host"])
-            else:
-                print(myjson["message"])
-                myjson["host"] = ip
-                myjson = json.dumps(myjson)
-                self.factory.broadcast(myjson)
-
-
 
     def connectionLost(self, reason):
         WebSocketServerProtocol.connectionLost(self, reason)
         self.factory.unregister(self)
+
 
 clients = []
 
