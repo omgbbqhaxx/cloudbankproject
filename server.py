@@ -1,5 +1,7 @@
 #-*- coding: utf-8 -*-
-import sys, json, requests, django ,os ,base64, collections,hashlib, math, pickle, arrow
+import sys, json, requests, django ,os ,base64, collections,hashlib, math
+from django.utils.encoding import smart_str
+from ecdsa import SigningKey, SECP256k1, NIST384p, BadSignatureError, VerifyingKey
 from twisted.internet import reactor
 from twisted.python import log
 from twisted.web.server import Site
@@ -7,6 +9,7 @@ from twisted.web.static import File
 import netifaces as ni
 from cloudbank.wsgi import application as wsgi_handler
 django.setup()
+from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
 
 
@@ -22,6 +25,8 @@ from autobahn.twisted.websocket import WebSocketServerFactory, \
 from autobahn.twisted.websocket import WebSocketClientFactory, \
     WebSocketClientProtocol, \
 connectWS
+
+ni.ifaddresses('eth0')
 ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 
