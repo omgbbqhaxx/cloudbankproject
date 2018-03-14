@@ -63,9 +63,10 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     payload = json.dumps(payload) #tekrar şifreleyip server ile paykaş
                     self.factory.broadcast(payload)
             else:
+                #Binary olsada buraya geliyor.
                 print("selam ", payload)
                 print("testfigfsa ", payload)
-                payload = json.loads(payload)
+                payload = json.loads(payload.decode('utf8'))
                 if payload["server"]:
                     print("bu mesaj serverdan gelmis demek")
                     addnewnode(payload["host"])
