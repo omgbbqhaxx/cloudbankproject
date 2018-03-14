@@ -12,9 +12,6 @@ django.setup()
 from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
 
-
-
-
 from autobahn.twisted.websocket import WebSocketClientProtocol, \
     WebSocketClientFactory
 
@@ -28,7 +25,6 @@ connectWS
 
 ni.ifaddresses('eth0')
 ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
-
 
 
 def addnewnode(host):
@@ -115,18 +111,71 @@ class MyClientProtocol(WebSocketClientProtocol):
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
+        data = {}
+        print("onmessage")
+        allify = {}
         if isBinary:
             print("Binary message received: {0} bytes".format(len(payload)))
         else:
-            print("am i here...")
-            payload = json.loads(payload.decode('utf-8'))
-            print(payload["host"])
-            if str(payload["host"]) == str(ip):
+
+            payloaded = json.loads(payload.decode('utf-8'))
+            print(payloaded["host"])
+            if str(payloaded["host"]) == str(ip):
                 print("bu zaten sensin")
             else:
-                payload = json.dumps(payload)
-                print("im here now", type(payload))
-                print("Uzak serverdan yeni mesaj geldi",payload)
+
+                payloaded = json.loads(payload.decode('utf-8'))
+                if 'sender' in payloaded:
+
+                    data['sender'] = str(payloaded["sender"])                                       #1
+                    data['receiver'] = str(payloaded["receiver"])                                   #2
+                    data['previous_hash'] = str(transaction.objects.all().last().blockhash)         #3
+                    data['amount'] = str(payloaded["amount"])                                       #4
+                    data['timestamp'] = str(payloaded["timestamp"])                                 #5
+                    data["nonce"] = str(payloaded["nonce"])
+                    data = collections.OrderedDict(sorted(data.items()))
+                    datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()
+                    sig = json.loads(payloaded["P2PKH"])
+
+                    print("datahashhere", datashash.encode('utf-8'))
+                    print("sigbyte is here", sig)
+                    print("sende weas here", payloaded["sender"])
+                    wllt = generate_wallet_from_pkey(payloaded["sender"])
+                    print(checkreward())
+                    try:
+                        sigbyte =  bytes.fromhex(sig)
+                        vk = VerifyingKey.from_string(bytes.fromhex(payloaded["sender"]), curve=SECP256k1)
+                        tt = vk.verify(sigbyte, datashash.encode('utf-8')) # True
+                    except BadSignatureError:
+                        print("unbelieveable")
+                        data["response"] = "unbelieveable"
+                        newtrans = transaction(sender=payloaded["sender"],
+                        senderwallet=wllt,
+                        receiver=payloaded["receiver"],
+                        prevblockhash=transaction.objects.all().last().blockhash,
+                        blockhash=payloaded["blockhash"],
+                        amount=payloaded["amount"],
+                        nonce=payloaded["nonce"],
+                        first_timestamp=payloaded["timestamp"],
+                        P2PKH=payloaded["P2PKH"],
+                        verification=False
+                        ).save()
+                        print("badsignature")
+
+                    newtrans = transaction(sender=payloaded["sender"],
+                    senderwallet=wllt,
+                    receiver=payloaded["receiver"],
+                    prevblockhash=transaction.objects.all().last().blockhash,
+                    blockhash=payloaded["blockhash"],
+                    amount=payloaded["amount"],
+                    nonce=payloaded["nonce"],
+                    first_timestamp=payloaded["timestamp"],
+                    P2PKH=payloaded["P2PKH"],
+                    verification=True
+                    ).save()
+
+                else:
+                    print("other message")
                 BroadcastServerFactory.broadcast(payload)
 
     def onClose(self, wasClean, code, reason):
