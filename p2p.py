@@ -86,8 +86,12 @@ class BroadcastServerFactory(WebSocketServerFactory):
 
     def register(self, client):
         if client not in clients:
-            print("registered client {}".format(client.peer))
-            clients.append(client)
+            if client not in clients:
+                print("registered client {}".format(client.peer))
+                print(clients)
+                tcp, host, port = client.peer.split(":")
+                print(host)
+                clients.append(client)
 
     def unregister(self, client):
         if client in clients:

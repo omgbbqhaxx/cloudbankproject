@@ -99,8 +99,9 @@ class BroadcastServerFactory(WebSocketServerFactory):
         for c in clients:
             print("im at broadcast",msg)
             print("im at broadcast type msg", type(msg))
-            #c.sendMessage(msg) .encode('utf8')
             print("messaj disaridan aldim {}".format(c.peer))
+            c.sendMessage(msg) #.encode('utf8')
+
 
 
 
