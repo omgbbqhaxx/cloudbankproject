@@ -47,7 +47,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         if not isBinary:
             print(type(payload))
             #omg
-            myjson = json.loads(payload.encode('utf8'))
+            myjson = json.loads(payload.decode('utf8'))
             if myjson["server"]:
                 print("that message came from server")
                 addnewnode(myjson["host"])
