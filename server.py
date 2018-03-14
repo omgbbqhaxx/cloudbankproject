@@ -124,7 +124,7 @@ class MyClientProtocol(WebSocketClientProtocol):
             if str(payloaded["host"]) == str(ip):
                 print("bu zaten sensin")
             else:
-                #payload = json.dumps(payload)
+                payload = json.dumps(payload).encode('utf-8')
                 print("im here now", type(payload))
                 print("Uzak serverdan yeni mesaj geldi",payload)
                 #BroadcastServerFactory.broadcast(payload)
