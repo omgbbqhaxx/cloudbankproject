@@ -64,8 +64,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
                     self.factory.broadcast(payload)
             else:
                 #Binary olsada buraya geliyor.
-                print("selam ", payload)
-                print("testfigfsa ", payload)
+                print("else : selam ", payload)
+                print("else testfigfsa ", type(payload))
                 payload = json.loads(payload.decode('utf8'))
                 if payload["server"]:
                     print("bu mesaj serverdan gelmis demek")
@@ -124,7 +124,7 @@ class MyClientProtocol(WebSocketClientProtocol):
             if str(payloaded["host"]) == str(ip):
                 print("bu zaten sensin")
             else:
-                payload = json.dumps(payload)
+                #payload = json.dumps(payload)
                 print("Buradayım", type(payload))
                 print("Uzak serverdan yeni mesaj geldi",payload)
                 #BroadcastServerFactory.broadcast(payload)
