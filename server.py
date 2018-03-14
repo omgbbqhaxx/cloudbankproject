@@ -47,10 +47,10 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
 
     def onMessage(self, payload, isBinary):
             print("is it binary", isBinary)
-
+            print("check payload type from here  x)", type(payload))
             print("check payload from here  x)", payload)
 
-            if not isBinary:
+            if isBinary:
                 print("selam ", payload.decode('utf-8'))
                 payload = json.loads(payload.decode('utf-8'))
                 if payload["server"]:
