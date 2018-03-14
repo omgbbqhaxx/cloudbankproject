@@ -27,6 +27,13 @@ ni.ifaddresses('eth0')
 ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 
+def addnewnode(host):
+    ws = "ws://{}:9000".format(host)
+    #factory = WebSocketClientFactory(u"ws://127.0.0.1:9000")
+    factory = WebSocketClientFactory(ws)
+    factory.protocol = MyClientProtocol
+    reactor.connectTCP(host, 9000, factory)
+
 #Yeni bir kullanıcı servara bağlandığı zaman bu kısım çalışır.
 class BroadcastServerProtocol(WebSocketServerProtocol):
 
@@ -39,6 +46,18 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
         print(isBinary)
         if not isBinary:
             print(type(payload))
+            #omg
+            myjson = json.loads(payload.encode('utf8'))
+            if myjson["server"]:
+                print("that message came from server")
+                addnewnode(myjson["host"])
+            else:
+                print(myjson["message"])
+                myjson["host"] = ip
+                myjson = json.dumps(myjson)
+                self.factory.broadcast(myjson)
+
+
         else:
             myjson = json.loads(payload)
             if myjson["server"]:
