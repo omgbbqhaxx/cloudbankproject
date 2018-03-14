@@ -65,7 +65,7 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             else:
                 print("selam ", payload)
                 print("testfigfsa ", payload.encode('utf8'))
-                payload = json.loads(payload.decode('utf-8'))
+                payload = json.loads(payload)
                 if payload["server"]:
                     print("bu mesaj serverdan gelmis demek")
                     addnewnode(payload["host"])
