@@ -54,10 +54,8 @@ class BroadcastServerProtocol(WebSocketServerProtocol):
             else:
                 print(myjson["message"])
                 myjson["host"] = ip
-                myjson = json.dumps(myjson)
-                self.factory.broadcast(myjson)
-
-
+                mybinarydata = json.dumps(myjson)
+                self.factory.broadcast(mybinarydata.encode('utf8'))
         else:
             myjson = json.loads(payload)
             if myjson["server"]:
