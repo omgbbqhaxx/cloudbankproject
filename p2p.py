@@ -27,28 +27,21 @@ ni.ifaddresses('eth0')
 ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 
-
+#Yeni bir kullanıcı servara bağlandığı zaman bu kısım çalışır.
 class BroadcastServerProtocol(WebSocketServerProtocol):
 
     def onOpen(self):
         self.factory.register(self)
 
     def onMessage(self, payload, isBinary):
+        print(type(payload))
+        print(payload)
+        print(isBinary)
         if not isBinary:
             print(type(payload))
-            print(payload)
-            payload = payload.decode('utf-8')
-            myjson = json.loads(payload)
-            if myjson["server"]:
-                print("that message came from server")
-                addnewnode(myjson["host"])
-            else:
-                print(myjson["message"])
-                myjson["host"] = ip
-                myjson = json.dumps(myjson)
-                self.factory.broadcast(myjson)
+            print("itsa binaryy", payload)
         else:
-            print(payload)
+            print("it isnot binary", payload)
             print(json.loads(payload))
             myjson = json.loads(payload)
             if myjson["server"]:
