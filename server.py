@@ -127,7 +127,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                 payload = json.dumps(payload)
                 print("im here now", type(payload))
                 print("Uzak serverdan yeni mesaj geldi",payload)
-                #BroadcastServerFactory.broadcast(payload)
+                BroadcastServerFactory.broadcast(payload)
 
     def onClose(self, wasClean, code, reason):
         print("WebSocket connection closed: {0}".format(reason))
