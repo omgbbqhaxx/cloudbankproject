@@ -228,7 +228,7 @@ def syncfirst():
 
 
 def job():
-    checkreward()
+    print(checkreward())
 
 def worker_main():
     while 1:
