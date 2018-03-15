@@ -145,7 +145,7 @@ def sendcloudcoin(request):
         receiverwallet = request.POST.get('receiverwallet').strip()
         amount = request.POST.get('amount').strip()
         sender = generate_pubkey_from_prikey(senderprivatekey)
-
+        print(checkreward())
         if not receiverwallet:
             allify['response'] = "fail"
             allify['explain'] = "Please fill the receiver box"

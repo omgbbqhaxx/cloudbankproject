@@ -225,30 +225,10 @@ def syncfirst():
 
 
 
-
-
-def job():
-    print(checkreward())
-
-def worker_main():
-    while 1:
-        job_func = jobqueue.get()
-        job_func()
-        jobqueue.task_done()
-
-
 if __name__ == '__main__':
-
     #log.startLogging(sys.stdout)
     syncfirst()
-
-    jobqueue = Queue.Queue()
-    schedule.every(120).seconds.do(jobqueue.put, job)
-    worker_thread = threading.Thread(target=worker_main)
-    worker_thread.start()
-
     ServerFactory = BroadcastServerFactory
-
     factory = ServerFactory(u"ws://127.0.0.1:9000")
     factory.protocol = BroadcastServerProtocol
     reactor.listenTCP(9000, factory)
@@ -256,6 +236,3 @@ if __name__ == '__main__':
     factory.protocol = MyClientProtocol
     reactor.connectTCP(u"159.89.197.53", 9000, factory)
     reactor.run()
-    while 1:
-        schedule.run_pending()
-        time.sleep(1)
