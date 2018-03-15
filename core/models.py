@@ -22,4 +22,4 @@ class transaction(models.Model):
     P2PKH = models.CharField(max_length=5000,null=False)
     verification = models.BooleanField(blank=True)
     def __str__(self):
-        return("blockhash : %s "% (self.blockhash))
+        return("blockhash : %s sender %s"% (self.blockhash, self.sender))
