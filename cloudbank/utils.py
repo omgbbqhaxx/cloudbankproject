@@ -68,7 +68,7 @@ def addreward():
     first_timestamp = local.timestamp
     nonce = miner(first_timestamp, settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 100)
     blockhash = gethash(settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 100, first_timestamp, nonce)
-
+    digitalSignature = json.dumps("reward")
     newtrans = transaction(sender=settings.REWARD_HASH,
     senderwallet=settings.REWARD_HASH,
     receiver=settings.NODE_OWNER_WALLET,
@@ -77,7 +77,7 @@ def addreward():
     amount=100,
     nonce=nonce,
     first_timestamp=first_timestamp,
-    P2PKH="reward",
+    P2PKH=digitalSignature,
     verification=True
     )
     newtrans.save()
@@ -92,7 +92,7 @@ def addreward():
     "amount":100,
     "nonce":nonce,
     "timestamp":first_timestamp,
-    "P2PKH":"reward",
+    "P2PKH": digitalSignature,
     "verification":True,
     "block" : transaction.objects.all().last().id + 1,
     "message":"new_transaction",
