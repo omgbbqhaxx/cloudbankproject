@@ -40,27 +40,6 @@ def generate_pubkey_from_prikey(private_key):
     return vk.to_string().hex()
 
 
-def checkreward():
-    checktime = addreward()
-    if checktime:
-       checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET).last()
-       if not checklastreward:
-            addreward()
-            return "node has been added to network"
-       else:
-           registerd_time = checklastreward.first_timestamp
-           oldtime = arrow.get(registerd_time).shift(minutes=+settings.REWARD_TIME).to("GMT").timestamp
-           lasttime = arrow.utcnow().to("GMT").timestamp
-           if (oldtime < lasttime):
-               addreward()
-               return  "congratulations you can earn your coins " + str(oldtime) + " and " + str(lasttime)
-           else:
-               return "you need waitv" + str(oldtime) + " and " + str(lasttime)
-
-           return "utils works correctly " + str(oldtime) + " and " + str(lasttime)
-    else:
-        return "wait"
-
 
 def addreward():
     utc = arrow.utcnow()
@@ -186,4 +165,23 @@ def checktimepass():
 
 
 
-print(checktimepass())
+def checkreward():
+    checktime = checktimepass()
+    if checktime:
+       checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET).last()
+       if not checklastreward:
+            addreward()
+            return "node has been added to network"
+       else:
+           registerd_time = checklastreward.first_timestamp
+           oldtime = arrow.get(registerd_time).shift(minutes=+settings.REWARD_TIME).to("GMT").timestamp
+           lasttime = arrow.utcnow().to("GMT").timestamp
+           if (oldtime < lasttime):
+               addreward()
+               return  "congratulations you can earn your coins " + str(oldtime) + " and " + str(lasttime)
+           else:
+               return "you need waitv" + str(oldtime) + " and " + str(lasttime)
+
+           return "utils works correctly " + str(oldtime) + " and " + str(lasttime)
+    else:
+        return "wait"
