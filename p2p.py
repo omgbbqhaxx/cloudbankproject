@@ -8,7 +8,7 @@ from twisted.web.server import Site
 from twisted.web.static import File
 import netifaces as ni
 from cloudbank.wsgi import application as wsgi_handler
-import Queue, threading
+import queue, threading
 django.setup()
 from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
@@ -241,7 +241,7 @@ if __name__ == '__main__':
     #log.startLogging(sys.stdout)
     syncfirst()
 
-    jobqueue = Queue.Queue()
+    jobqueue = queue.queue()
     schedule.every(120).seconds.do(jobqueue.put, job)
     worker_thread = threading.Thread(target=worker_main)
     worker_thread.start()

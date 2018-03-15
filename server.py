@@ -12,7 +12,7 @@ django.setup()
 from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
 
-import Queue, threading
+import queue, threading
 
 
 
@@ -212,7 +212,7 @@ def worker_main():
 
 if __name__ == '__main__':
     print("start")
-    jobqueue = Queue.Queue()
+    jobqueue = queue.queue()
     schedule.every(120).seconds.do(jobqueue.put, job)
     worker_thread = threading.Thread(target=worker_main)
     worker_thread.start()
