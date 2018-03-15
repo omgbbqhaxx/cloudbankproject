@@ -242,7 +242,7 @@ if __name__ == '__main__':
     #log.startLogging(sys.stdout)
     syncfirst()
 
-    jobqueue = queue()
+    jobqueue = queue.queue()
     schedule.every(120).seconds.do(jobqueue.put, job)
     worker_thread = threading.Thread(target=worker_main)
     worker_thread.start()
