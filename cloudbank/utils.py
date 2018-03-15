@@ -1,10 +1,13 @@
 #-*- coding: utf-8 -*-
-import uuid , json , string , random, urllib, base64, os, sys, time, pickle, collections, math, arrow ,hashlib
+import uuid , json , string , random, urllib, base64, os, sys, time, pickle, collections, math, arrow ,hashlib, websocket ,bson
 from ecdsa import SigningKey, SECP256k1, NIST384p, BadSignatureError, VerifyingKey
 from django.conf import settings
 from django.db.models import Avg, Sum, Count
 from core.models import transaction
-
+from datetime import datetime
+from django.template.defaultfilters import stringfilter
+import netifaces as ni
+ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 def instantwallet():
     sk = SigningKey.generate(curve=SECP256k1)
@@ -38,25 +41,25 @@ def generate_pubkey_from_prikey(private_key):
 
 
 def checkreward():
-   checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET).last()
-   if not checklastreward:
-        addreward()
-        return "node has been added to network"
-   else:
-       registerd_time = checklastreward.first_timestamp
-       oldtime = arrow.get(registerd_time).shift(minutes=+settings.REWARD_TIME).to("GMT").timestamp
-       lasttime = arrow.utcnow().to("GMT").timestamp
-
-       if (oldtime < lasttime):
-           addreward()
-           return  "congratulations you can earn your coins " + str(oldtime) + " and " + str(lasttime)
+    checktime = addreward()
+    if checktime:
+       checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET).last()
+       if not checklastreward:
+            addreward()
+            return "node has been added to network"
        else:
-           return "you need waitv" + str(oldtime) + " and " + str(lasttime)
+           registerd_time = checklastreward.first_timestamp
+           oldtime = arrow.get(registerd_time).shift(minutes=+settings.REWARD_TIME).to("GMT").timestamp
+           lasttime = arrow.utcnow().to("GMT").timestamp
+           if (oldtime < lasttime):
+               addreward()
+               return  "congratulations you can earn your coins " + str(oldtime) + " and " + str(lasttime)
+           else:
+               return "you need waitv" + str(oldtime) + " and " + str(lasttime)
 
-       return "utils works correctly " + str(oldtime) + " and " + str(lasttime)
-
-
-
+           return "utils works correctly " + str(oldtime) + " and " + str(lasttime)
+    else:
+        return "wait"
 
 
 def addreward():
@@ -76,6 +79,30 @@ def addreward():
     P2PKH="reward",
     verification=True
     ).save()
+
+    ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+    geturl = "http://{}/api/v1/gettransaction/{}/".format(ip,newtrans.id)
+    test = {"server":False,
+    "sender":settings.REWARD_HASH,
+    "receiver":settings.NODE_OWNER_WALLET,
+    "prevblockhash":transaction.objects.all().last().blockhash,
+    "blockhash":blockhash,
+    "amount":100,
+    "nonce":nonce,
+    "timestamp":first_timestamp,
+    "P2PKH":"reward",
+    "verification":True,
+    "block" : transaction.objects.all().last().id + 1,
+    "message":"new_transaction",
+    "url":geturl}
+
+    payload = json.dumps(test)
+
+    ws = websocket.WebSocket()
+    wsip = "ws://{}:9000".format(ip)
+    ws.connect(wsip)
+    ws.send(payload)
+ 
 
 
 
@@ -108,3 +135,53 @@ def gethash(senderwalletid, receiverhex, amount, first_timestamp, nonce):
     data = collections.OrderedDict(sorted(data.items()))
     datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()
     return datashash
+
+
+
+def checktimepass():
+    lasttime = arrow.utcnow().to("GMT")
+    gethours = int(lasttime.format('H'))
+    getminute = int(lasttime.format('m'))
+    print('hours %s and minutes %s' % (gethours, getminute))
+    if gethours == 00:
+        if getminute <= 5:
+            return True
+        else:
+            return False
+    elif gethours == 4:
+        if getminute <= 5:
+            return True
+        else:
+            return False
+    elif gethours == 8:
+        if getminute <= 5:
+            return True
+        else:
+            return False
+    elif gethours == 12:
+        if getminute <= 5:
+            return True
+        else:
+            return False
+    elif gethours == 16:
+        if getminute <= 5:
+            return True
+        else:
+            return False
+    elif gethours == 20:
+        if getminute <= 5:
+            return True
+        else:
+            return False
+
+    elif gethours == 14:
+        if getminute <= 10:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+
+print(checktimepass())
