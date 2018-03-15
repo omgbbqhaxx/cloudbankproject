@@ -180,7 +180,7 @@ def sendcloudcoin(request):
             data["nonce"] = str(perfect)
             data = collections.OrderedDict(sorted(data.items()))
             datashash  = hashlib.sha256(json.dumps(data).encode('utf-8')).hexdigest()
-            print(checkreward())
+            #print(checkreward())
             try:
                 sk = SigningKey.from_string(bytes.fromhex(senderprivatekey), curve=SECP256k1)
                 vk = sk.get_verifying_key() #public_key

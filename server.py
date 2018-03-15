@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-import sys, json, requests, django ,os ,base64, collections,hashlib, math
+import sys, json, requests, django ,os ,base64, collections,hashlib, math , schedule, time
 from django.utils.encoding import smart_str
 from ecdsa import SigningKey, SECP256k1, NIST384p, BadSignatureError, VerifyingKey
 from twisted.internet import reactor
@@ -11,6 +11,10 @@ from cloudbank.wsgi import application as wsgi_handler
 django.setup()
 from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
+
+import Queue, threading
+
+
 
 from autobahn.twisted.websocket import WebSocketClientProtocol, \
     WebSocketClientFactory
@@ -152,7 +156,7 @@ class MyClientProtocol(WebSocketClientProtocol):
                     print("sigbyte is here", sig)
                     print("sende weas here", payloaded["sender"])
                     wllt = generate_wallet_from_pkey(payloaded["sender"])
-                    print(checkreward())
+                    #print(checkreward())
                     try:
                         sigbyte =  bytes.fromhex(sig)
                         vk = VerifyingKey.from_string(bytes.fromhex(payloaded["sender"]), curve=SECP256k1)
@@ -195,8 +199,26 @@ class MyClientProtocol(WebSocketClientProtocol):
 
 
 
+
+
+def job():
+    checkreward()
+
+def worker_main():
+    while 1:
+        job_func = jobqueue.get()
+        job_func()
+        jobqueue.task_done()
+
 if __name__ == '__main__':
     print("start")
+    jobqueue = Queue.Queue()
+    schedule.every(120).seconds.do(jobqueue.put, job)
+    worker_thread = threading.Thread(target=worker_main)
+    worker_thread.start()
+    schedule.run_pending()
+
+
     ServerFactory = BroadcastServerFactory
     factory = ServerFactory(u"ws://127.0.0.1:9000")
     factory.protocol = BroadcastServerProtocol
