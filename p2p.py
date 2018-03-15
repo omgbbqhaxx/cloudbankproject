@@ -8,7 +8,8 @@ from twisted.web.server import Site
 from twisted.web.static import File
 import netifaces as ni
 from cloudbank.wsgi import application as wsgi_handler
-import queue, threading
+import threading
+import Queue as queue
 django.setup()
 from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
