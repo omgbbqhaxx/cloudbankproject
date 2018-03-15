@@ -144,38 +144,38 @@ def checktimepass():
     getminute = int(lasttime.format('m'))
     print('hours %s and minutes %s' % (gethours, getminute))
     if gethours == 00:
-        if getminute <= 15:
+        if getminute <= 30:
             return True
         else:
             return False
     elif gethours == 4:
-        if getminute <= 15:
+        if getminute <= 30:
             return True
         else:
             return False
     elif gethours == 8:
-        if getminute <= 15:
+        if getminute <= 30:
             return True
         else:
             return False
     elif gethours == 12:
-        if getminute <= 15:
+        if getminute <= 30:
             return True
         else:
             return False
     elif gethours == 16:
-        if getminute <= 15:
+        if getminute <= 30:
             return True
         else:
             return False
     elif gethours == 20:
-        if getminute <= 15:
+        if getminute <= 30:
             return True
         else:
             return False
 
     elif gethours == 14:
-        if getminute <= 15:
+        if getminute <= 30:
             return True
         else:
             return False
