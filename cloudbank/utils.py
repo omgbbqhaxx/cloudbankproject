@@ -68,6 +68,7 @@ def addreward():
     first_timestamp = local.timestamp
     nonce = miner(first_timestamp, settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 100)
     blockhash = gethash(settings.REWARD_HASH, settings.NODE_OWNER_WALLET, 100, first_timestamp, nonce)
+
     newtrans = transaction(sender=settings.REWARD_HASH,
     senderwallet=settings.REWARD_HASH,
     receiver=settings.NODE_OWNER_WALLET,
@@ -78,7 +79,8 @@ def addreward():
     first_timestamp=first_timestamp,
     P2PKH="reward",
     verification=True
-    ).save()
+    )
+    newtrans.save()
     newtrans.refresh_from_db()
     ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
     geturl = "http://{}/api/v1/gettransaction/{}/".format(ip,newtrans.id)
