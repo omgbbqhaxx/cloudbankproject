@@ -246,17 +246,16 @@ if __name__ == '__main__':
     schedule.every(120).seconds.do(jobqueue.put, job)
     worker_thread = threading.Thread(target=worker_main)
     worker_thread.start()
-    schedule.run_pending()
 
     ServerFactory = BroadcastServerFactory
 
     factory = ServerFactory(u"ws://127.0.0.1:9000")
     factory.protocol = BroadcastServerProtocol
     reactor.listenTCP(9000, factory)
-
     factory = WebSocketClientFactory(u"ws://159.89.197.53:9000")
     factory.protocol = MyClientProtocol
-
     reactor.connectTCP(u"159.89.197.53", 9000, factory)
-
     reactor.run()
+    while 1:
+        schedule.run_pending()
+        time.sleep(1)

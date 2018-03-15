@@ -216,7 +216,7 @@ if __name__ == '__main__':
     schedule.every(120).seconds.do(jobqueue.put, job)
     worker_thread = threading.Thread(target=worker_main)
     worker_thread.start()
-    schedule.run_pending()
+
 
 
     ServerFactory = BroadcastServerFactory
@@ -224,3 +224,6 @@ if __name__ == '__main__':
     factory.protocol = BroadcastServerProtocol
     reactor.listenTCP(9000, factory)
     reactor.run()
+    while 1:
+        schedule.run_pending()
+        time.sleep(1)
