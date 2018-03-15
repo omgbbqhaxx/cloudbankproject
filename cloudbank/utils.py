@@ -155,7 +155,7 @@ def checktimepass():
         else:
             return False
 
-    elif gethours == 1:
+    elif gethours == 22:
         if getminute <= 30:
             return True
         else:
