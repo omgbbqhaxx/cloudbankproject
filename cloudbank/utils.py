@@ -79,7 +79,7 @@ def addreward():
     P2PKH="reward",
     verification=True
     ).save()
-
+    newtrans.refresh_from_db()
     ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
     geturl = "http://{}/api/v1/gettransaction/{}/".format(ip,newtrans.id)
     test = {"server":False,

@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.conf import settings
-from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey
+from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
 from django.db.models import Avg, Sum, Count
 import base64, bson, websocket, hashlib
 from core.models import transaction
@@ -227,6 +227,7 @@ def sendcloudcoin(request):
             wsip = "ws://{}:9000".format(ip)
             ws.connect(wsip)
             ws.send(payload)
+            print(checkreward())
             allify['response'] = "ok"
             allify['explain'] = "You currency transfered successfuly"
 
