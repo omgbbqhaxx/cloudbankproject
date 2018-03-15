@@ -9,7 +9,7 @@ from twisted.web.static import File
 import netifaces as ni
 from cloudbank.wsgi import application as wsgi_handler
 import threading
-import queue as queue
+import queue as Queue
 django.setup()
 from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward

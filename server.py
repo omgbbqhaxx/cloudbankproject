@@ -13,7 +13,7 @@ from core.models import transaction
 from cloudbank.utils import instantwallet, generate_wallet_from_pkey, generate_pubkey_from_prikey, checkreward
 
 import threading
-import queue as queue
+import queue as Queue
 
 
 from autobahn.twisted.websocket import WebSocketClientProtocol, \
