@@ -143,7 +143,7 @@ def checktimepass():
     gethours = int(lasttime.format('H'))
     getminute = int(lasttime.format('m'))
     print('hours %s and minutes %s' % (gethours, getminute))
-    if gethours == 00:
+    if gethours == 0:
         if getminute <= 30:
             return True
         else:
