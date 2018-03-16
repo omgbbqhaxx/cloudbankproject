@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','159.89.197.53','159.65.89.225','bitjoin','cloudbankproject.com','www.cloudbankproject.com']
 #Currency and Node definations
-CURRENCY = "CC"
+CURRENCY = "4A"
 NODE_OWNER_WALLET = "CC2d7cf4fca49fb0d2c5d2bc7113ce3376"
 REWARD_HASH = "4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a"
 REWARD_TIME = 40 #Nodes total wait per reward time. Example: 120 for 2 hours.
