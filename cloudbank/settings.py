@@ -24,7 +24,7 @@ SECRET_KEY = 'j54w1jdm@o(7vmnv=9_duz$c8zg-brf3z%i8yf%9@o(@k4fezu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','159.89.197.53','159.65.89.225','bitjoin','cloudbankproject.com','www.cloudbankproject.com']
+ALLOWED_HOSTS = ['localhost','159.89.197.53','159.65.89.225','bitjoin','cloudbankproject.com','www.cloudbankproject.com','167.99.47.107']
 #Currency and Node definations
 CURRENCY = "4A"
 NODE_OWNER_WALLET = "4A293aec6e4fe9a57c30af4f6ed7cc9723"
