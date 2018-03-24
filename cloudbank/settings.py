@@ -3,6 +3,11 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#Currency and Node definations
+CURRENCY = "4A"
+NODE_OWNER_WALLET = "4A293aec6e4fe9a57c30af4f6ed7cc9723"
+REWARD_HASH = "4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a"
+REWARD_TIME = 40 #Nodes total wait per reward time. Example: 120 for 2 hours.
 
 
 # Celery settings
@@ -43,11 +48,6 @@ SECRET_KEY = get_random_string(50, chars)
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','159.89.197.53','159.65.89.225','bitjoin','cloudbankproject.com','www.cloudbankproject.com','167.99.47.107']
-#Currency and Node definations
-CURRENCY = "4A"
-NODE_OWNER_WALLET = "4A293aec6e4fe9a57c30af4f6ed7cc9723"
-REWARD_HASH = "4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a"
-REWARD_TIME = 40 #Nodes total wait per reward time. Example: 120 for 2 hours.
 
 
 # Application definition
