@@ -20,18 +20,18 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'GMT'
 
-# Activate after installation!!!!!!
+#Activate after installation!!!!!!
 from celery.schedules import crontab, timedelta
 from cloudbank.tasks import add
 
-# Other Celery settings
-CELERY_BEAT_SCHEDULE = {
-    'task-number-one': {
-        'task': 'cloudbank.tasks.add',
-        'schedule': crontab(minute='*/5'),
-        'args': (16, 16)
-    }
-}
+# # Other Celery settings
+# CELERY_BEAT_SCHEDULE = {
+#     'task-number-one': {
+#         'task': 'cloudbank.tasks.add',
+#         'schedule': crontab(minute='*/5'),
+#         'args': (16, 16)
+#     }
+# }
 
 
 

@@ -9,9 +9,6 @@ def givereward(x, y):
     print("im here bro")
     return checkreward()
 
-
-
-
 @shared_task
 def add(x, y):
     print("im here bro")
