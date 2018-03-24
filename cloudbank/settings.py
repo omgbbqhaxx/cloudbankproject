@@ -5,15 +5,15 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# # Celery settings
-# CELERY_BROKER_URL = 'redis://:&&REDis&&35@localhost:6379/0'
-# BROKER_TRANSPORT = 'redis'
-# #: Only add pickle to this list if your broker is secured
-# #: from unwanted access (see userguide/security.html)
-# CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_BACKEND = 'django-db'
-# CELERY_TIMEZONE = 'GMT'
+# Celery settings
+CELERY_BROKER_URL = 'redis://:&&REDis&&35@localhost:6379/0'
+BROKER_TRANSPORT = 'redis'
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = 'GMT'
 #
 #
 # from celery.schedules import crontab, timedelta
