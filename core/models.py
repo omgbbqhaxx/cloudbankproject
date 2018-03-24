@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import django
-django.setup()
 from django.db import models
 from django.utils import timezone
-import pytz, datetime
+import datetime
 
 # Create your models here.
 
