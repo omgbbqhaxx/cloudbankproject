@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 import os
 import django
 from celery import Celery
-
+django.setup()
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cloudbank.settings')
 
