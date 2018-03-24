@@ -15,6 +15,32 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Celery settings
+CELERY_BROKER_URL = 'redis://:&&REDis&&35@localhost:6379/0'
+BROKER_TRANSPORT = 'redis'
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = 'GMT'
+
+
+from celery.schedules import crontab, timedelta
+from cloudbank.tasks import givereward
+
+# Other Celery settings
+CELERY_BEAT_SCHEDULE = {
+    'task-number-one': {
+        'task': 'jailbreak.tasks.givereward',
+        'schedule': crontab(minute='*/30'),
+        'args': (16, 16)
+    }
+}
+
+
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -41,8 +67,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django_celery_results',
+    'django_celery_beat',
     'core',
     'gunicorn',
+
 ]
 
 MIDDLEWARE = [
