@@ -48,6 +48,7 @@ pip install --upgrade virtualenv
 virtualenv -p python3 venv
 pip install -r requirements.txt
 pipenv install requests
+pip install -U "celery[redis]"
 ```
 
 
