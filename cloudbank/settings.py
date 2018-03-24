@@ -14,19 +14,19 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'GMT'
-#
-#
-# from celery.schedules import crontab, timedelta
-# from cloudbank.tasks import givereward
-#
-# # Other Celery settings
-# CELERY_BEAT_SCHEDULE = {
-#     'task-number-one': {
-#         'task': 'cloudbank.tasks.givereward',
-#         'schedule': crontab(minute='*/1'),
-#         'args': (16, 16)
-#     }
-# }
+
+# Activate after installation!!!!!!
+from celery.schedules import crontab, timedelta
+from cloudbank.tasks import givereward
+
+# Other Celery settings
+CELERY_BEAT_SCHEDULE = {
+    'task-number-one': {
+        'task': 'cloudbank.tasks.givereward',
+        'schedule': crontab(minute='*/5'),
+        'args': (16, 16)
+    }
+}
 
 
 
