@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'core',
     'gunicorn',
     'django_celery_results',
+    'django_celery_beat',
 
 
 ]
