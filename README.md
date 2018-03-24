@@ -60,6 +60,16 @@ export DJANGO_SETTINGS_MODULE=cloudbank.settings
 
 
 
+## 4p2p github helper comments.
+
+```shell
+git clone https://github.com/omgbbqhaxx/cloudbankproject.git
+git pull
+git fetch --all
+git reset --hard origin/master
+```
+
+
 
 ## Circus: A Process & Socket Manager configurations
 The simplest way to install it is to use pip, a tool for installing and managing Python packages:
