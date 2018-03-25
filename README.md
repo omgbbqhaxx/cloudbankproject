@@ -104,7 +104,7 @@ cmd = /opt/venv/bin/gunicorn_start
 numprocesses = 1
 [watcher:starttcpconnections]
 cmd = python /opt/venv/cloudbank/server.py
-cmd = celery -A cloudbank worker -l debug
+cmd = command=/opt/venv/bin/celery --app=cloudbank.mycelery_app:app worker --loglevel=INFO #celery -A cloudbank worker -l debug
 numprocesses = 1
 ```
 
