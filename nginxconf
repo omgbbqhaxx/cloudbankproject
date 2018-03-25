@@ -1,0 +1,42 @@
+upstream hello_app_server {
+  # fail_timeout=0 means we always retry an upstream even if it failed
+  # to return a good HTTP response (in case the Unicorn master nukes a
+  # single worker for timing out).
+
+  server unix:/opt/venv/run/gunicorn.sock fail_timeout=0;
+}
+
+server {
+
+    listen   80;
+    server_name retwiends.com;
+
+    client_max_body_size 4G;
+
+    access_log /opt/venv/logs/nginx-access.log;
+    error_log /opt/venv/logs/nginx-error.log;
+
+    location /static/ {
+        alias   /opt/venv/cloudcoin/cloudcoin/templates/static/;
+    }
+
+    location /media/ {
+        alias   /opt/venv/cloudcoin/cloudcoin/templates/media/;
+    }
+
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        if (!-f $request_filename) {
+            proxy_pass http://hello_app_server;
+            break;
+        }
+    }
+
+    # Error pages
+    error_page 500 502 503 504 /500.html;
+    location = /500.html {
+        root /opt/venv/cloudcoin/cloudcoin/templates/static/;
+    }
+}
