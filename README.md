@@ -99,13 +99,22 @@ pip install chaussette
 
 example.ini
 ```shell
+[circus]
+statsd = 1
+httpd = 1
+
 [watcher:startserver]
 cmd = /opt/venv/bin/gunicorn_start
 numprocesses = 1
+
 [watcher:starttcpconnections]
 cmd = python /opt/venv/cloudbank/server.py
-cmd = command=/opt/venv/bin/celery --app=cloudbank.mycelery_app:app worker --loglevel=INFO #celery -A cloudbank worker -l debug
 numprocesses = 1
+
+[watcher:startcelery]
+cmd =/opt/venv/bin/celery --app=cloudbank.mycelery_app:app worker --loglevel=INFO
+numprocesses = 1
+
 ```
 
 The file is then passed to circusd:
