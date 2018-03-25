@@ -71,7 +71,20 @@ git reset --hard origin/master
 
 
 
+
+
+
+
 ## Gunicorn configurations
+The simplest way to install it is to use pip, a tool for installing and managing Python packages:
+```shell
+cd /opt/venv/bin
+wget https://raw.githubusercontent.com/omgbbqhaxx/cloudbankproject/master/gunicorn_start
+chmod u+x gunicorn_start
+. gunicorn_start
+```
+
+## Circus: A Process & Socket Manager configurations
 The simplest way to install it is to use pip, a tool for installing and managing Python packages:
 ```shell
 pip install circus
@@ -80,16 +93,6 @@ pip install chaussette
 ```
 
 
-
-
-## Circus: A Process & Socket Manager configurations
-The simplest way to install it is to use pip, a tool for installing and managing Python packages:
-```shell
-cd /opt/venv/bin
-wget https://raw.githubusercontent.com/omgbbqhaxx/cloudbankproject/master/gunicorn_start
-chmod u+x gunicorn_start
-. gunicorn_start
-```
 
 example.ini
 ```shell
