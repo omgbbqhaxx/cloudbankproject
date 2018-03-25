@@ -87,6 +87,9 @@ chmod u+x gunicorn_start
 ## Circus: A Process & Socket Manager configurations
 The simplest way to install it is to use pip, a tool for installing and managing Python packages:
 ```shell
+sudo apt-get install libzmq-dev libevent-dev python-dev python-virtualenv
+cd /opt/venv/bin
+. activate
 pip install circus
 pip install circus-web
 pip install chaussette
@@ -101,7 +104,7 @@ cmd = /opt/venv/bin/gunicorn_start
 numprocesses = 1
 [watcher:starttcpconnections]
 cmd = python /opt/venv/cloudbank/server.py
-cmd = celery -A cloudbank worker -l debug 
+cmd = celery -A cloudbank worker -l debug
 numprocesses = 1
 ```
 
