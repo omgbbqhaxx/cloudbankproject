@@ -38,8 +38,8 @@ export LC_CTYPE="en_US.UTF-8"
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt-get update
 sudo apt-get install python3.3
-sudo apt-get install python3.3
 sudo apt-get install python3-pip
+apt install python-pip
 pip install --upgrade virtualenv
 ```
 
