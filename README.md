@@ -129,6 +129,8 @@ circusctl quit --waiting
 
 
 ## Finally we can complate nginx configuration!
+
+NEWER FORGET TO CHANGE SERVER_NAME WITH YOUR IP ADDRESS FROM NGİNXCONF.!
 ```shell
 sudo apt-get install nginx
 sudo service nginx start

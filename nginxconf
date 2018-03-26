@@ -2,14 +2,14 @@ upstream hello_app_server {
   # fail_timeout=0 means we always retry an upstream even if it failed
   # to return a good HTTP response (in case the Unicorn master nukes a
   # single worker for timing out).
-
+  #NEWER FORGET TO CHANGE SERVER_NAME WITH YOUR IP ADDRESS.
   server unix:/opt/venv/run/gunicorn.sock fail_timeout=0;
 }
 
 server {
 
     listen   80;
-    server_name _;
+    server_name 167.99.47.107;
 
     client_max_body_size 4G;
 
