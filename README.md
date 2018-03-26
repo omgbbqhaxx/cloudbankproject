@@ -47,22 +47,27 @@ pip install --upgrade virtualenv
 
 ```shell
 virtualenv -p python3 venv
+cd venv
+. bin/activate
+git clone https://github.com/omgbbqhaxx/cloudbankproject.git
+mv cloudbankproject cloudbank && cd cloudbank
 pip install -r requirements.txt
 pipenv install requests
+export DJANGO_SETTINGS_MODULE=cloudbank.settings
 pip install -U "celery[redis]"
 ```
 
 
-## After clone our project.
+## Your need install Redis on your server because celery work with redis server.
+**[Step by step installation from here](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04)**
 
 ```shell
-export DJANGO_SETTINGS_MODULE=cloudbank.settings
+pip install celery && sudo apt-get update -y && sudo apt-get install build-essential tcl -y && cd /tmp && curl -O http://download.redis.io/redis-stable.tar.gz && tar xzvf redis-stable.tar.gz && cd redis-stable && sudo make install && make && make test && sudo mkdir /etc/redis && sudo cp /tmp/redis-stable/redis.conf /etc/redis && rm -r -f redis.conf && wget https://gist.githubusercontent.com/omgbbqhaxx/03b31c2ed319bc987ddb7c8d77c33861/raw/d04c90c96e950c7fb2528774259c3843b20fb7a3/redis.conf
 ```
 
 
 
 ## 4p2p github helper comments.
-
 ```shell
 git clone https://github.com/omgbbqhaxx/cloudbankproject.git
 git pull
