@@ -17,11 +17,11 @@ server {
     error_log /opt/venv/logs/nginx-error.log;
 
     location /static/ {
-        alias   /opt/venv/cloudcoin/cloudcoin/templates/static/;
+        alias   /opt/venv/cloudbank/cloudbank/templates/static/;
     }
 
     location /media/ {
-        alias   /opt/venv/cloudcoin/cloudcoin/templates/media/;
+        alias   /opt/venv/cloudbank/cloudbank/templates/media/;
     }
 
     location / {
@@ -37,6 +37,6 @@ server {
     # Error pages
     error_page 500 502 503 504 /500.html;
     location = /500.html {
-        root /opt/venv/cloudcoin/cloudcoin/templates/static/;
+        root /opt/venv/cloudbank/cloudbank/templates/static/;
     }
 }
