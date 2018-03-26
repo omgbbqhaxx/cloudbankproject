@@ -22,12 +22,12 @@ CELERY_TIMEZONE = 'GMT'
 
 #Activate after installation!!!!!!
 from celery.schedules import crontab, timedelta
-from cloudbank.tasks import add
+from cloudbank.tasks import givereward
 
 # Other Celery settings
 CELERY_BEAT_SCHEDULE = {
     'task-number-one': {
-        'task': 'cloudbank.tasks.add',
+        'task': 'cloudbank.tasks.givereward',
         'schedule': crontab(minute='*/5'),
         'args': (16, 16)
     }
