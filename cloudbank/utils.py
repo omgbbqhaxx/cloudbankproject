@@ -166,7 +166,7 @@ def checktimepass():
 
 
 def checkreward():
-    checktime = checktimepass()
+    checktime = True #checktimepass()
     if checktime:
        checklastreward = transaction.objects.filter(sender=settings.REWARD_HASH,receiver=settings.NODE_OWNER_WALLET).last()
        if not checklastreward:
