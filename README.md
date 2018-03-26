@@ -102,10 +102,6 @@ pip install chaussette
 
 example.ini
 ```shell
-[circus]
-statsd = 1
-httpd = 1
-
 [watcher:startserver]
 cmd = /opt/venv/bin/gunicorn_start
 numprocesses = 1
