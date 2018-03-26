@@ -105,10 +105,12 @@ statsd = 1
 httpd = 1
 
 [watcher:startserver]
+cmd = export DJANGO_SETTINGS_MODULE=cloudbank.settings
 cmd = /opt/venv/bin/gunicorn_start
 numprocesses = 1
 
 [watcher:starttcpconnections]
+cmd = export DJANGO_SETTINGS_MODULE=cloudbank.settings
 cmd = python /opt/venv/cloudbank/server.py
 numprocesses = 1
 
