@@ -149,5 +149,5 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'templates/media_cdn')
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-#STATIC_ROOT = os.path.join(PROJECT_DIR, 'templates/static')
-STATICFILES_DIRS = os.path.join(BASE_DIR, "cloudbank/templates/static/"),
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'templates/static')
+#STATICFILES_DIRS = os.path.join(BASE_DIR, "cloudbank/templates/static/"),
