@@ -120,12 +120,10 @@ numprocesses = 1
 The file is then passed to circusd:
 ```shell
 circusd example.ini
-```
-
-You can exist from program if already running.
-```shell
+circusd --daemon example.ini
 circusctl quit --waiting
 ```
+
 
 
 ## Finally we can complate nginx configuration!
