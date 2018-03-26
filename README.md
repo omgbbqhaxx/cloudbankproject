@@ -91,8 +91,10 @@ The simplest way to install it is to use pip, a tool for installing and managing
 sudo apt-get install libzmq-dev libevent-dev python-dev python-virtualenv
 cd /opt/venv/bin
 . activate
-pip install circus
-pip install circus-web
+git clone https://github.com/omgbbqhaxx/circus-web.git
+cd circus-web
+python setup.py build
+python setup.py install
 pip install chaussette
 ```
 
