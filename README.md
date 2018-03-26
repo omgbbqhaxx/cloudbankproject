@@ -128,13 +128,13 @@ circusctl quit --waiting
 ```
 
 
-Finallay we can complate nginx configuration!
+## Finally we can complate nginx configuration!
 ```shell
 sudo apt-get install nginx
 sudo service nginx start
 cd /etc/nginx/sites-available
 wget https://raw.githubusercontent.com/omgbbqhaxx/cloudbankproject/master/nginxconf
-ln -s /etc/nginx/sites-available/nginxconf /etc/nginx/sites-enabled/nginxconf 
+ln -s /etc/nginx/sites-available/nginxconf /etc/nginx/sites-enabled/nginxconf
 cd /opt/venv/
 mkdir logs && cd logs
 touch nginx-access.log && touch nginx-error.log
