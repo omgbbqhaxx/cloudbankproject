@@ -60,7 +60,7 @@ pip install -U "celery[redis]"
 
 ## Your need install Redis on your server because celery work with redis server.
 **[Step by step installation from here](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04)**
-
+NEWER FORGET TO CHANGE PASSWORD WITH YOUR PW FROM REDİS.CONF.!
 ```shell
 pip install celery && sudo apt-get update -y && sudo apt-get install build-essential tcl -y && cd /tmp && curl -O http://download.redis.io/redis-stable.tar.gz && tar xzvf redis-stable.tar.gz && cd redis-stable && sudo make install && make && make test
 sudo mkdir /etc/redis && cd /etc/redis && wget https://gist.githubusercontent.com/omgbbqhaxx/03b31c2ed319bc987ddb7c8d77c33861/raw/d04c90c96e950c7fb2528774259c3843b20fb7a3/redis.conf
