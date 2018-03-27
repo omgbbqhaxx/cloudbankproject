@@ -120,8 +120,7 @@ cmd = python /opt/venv/cloudbank/p2p.py
 numprocesses = 1
 
 [watcher:startcelery]
-shell=True
-shell_args=cd /opt/venv/cloudbank/ &&  celery -A cloudbank worker -l info -B
+cmd = celery -A cloudbank worker --workdir /opt/venv/cloudbank  -l info -B
 numprocesses = 1
 ```
 
