@@ -64,7 +64,15 @@ pip install -U "celery[redis]"
 ```shell
 pip install celery && sudo apt-get update -y && sudo apt-get install build-essential tcl -y && cd /tmp && curl -O http://download.redis.io/redis-stable.tar.gz && tar xzvf redis-stable.tar.gz && cd redis-stable && sudo make install && make && make test
 sudo mkdir /etc/redis && cd /etc/redis && wget https://gist.githubusercontent.com/omgbbqhaxx/03b31c2ed319bc987ddb7c8d77c33861/raw/d04c90c96e950c7fb2528774259c3843b20fb7a3/redis.conf
-cd /etc/systemd/system/
+cd /etc/systemd/system/ && wget  https://raw.githubusercontent.com/omgbbqhaxx/cloudbankproject/master/redis.service
+sudo adduser --system --group --no-create-home redis
+sudo mkdir /var/lib/redis
+sudo chown redis:redis /var/lib/redis
+sudo chmod 770 /var/lib/redis
+sudo systemctl start redis
+sudo systemctl status redis
+redis-cli
+ping
 ```
 
 
@@ -76,12 +84,6 @@ git pull
 git fetch --all
 git reset --hard origin/master
 ```
-
-
-
-
-
-
 
 ## Gunicorn configurations
 The simplest way to install it is to use pip, a tool for installing and managing Python packages:
