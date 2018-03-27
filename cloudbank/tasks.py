@@ -5,12 +5,7 @@ from celery import shared_task
 
 
 @shared_task
-def givereward(x, y):
+def givereward():
     from cloudbank.utils import checkreward
     print("im here bro")
     return checkreward()
-
-@shared_task
-def add(x, y):
-    print("im here bro")
-    return x + y

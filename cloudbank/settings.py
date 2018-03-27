@@ -21,7 +21,7 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'GMT'
 
 #Activate after installation!!!!!!
-from celery.schedules import crontab, timedelta
+from celery.schedules import crontab
 from cloudbank.tasks import givereward
 
 # Other Celery settings
