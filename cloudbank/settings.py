@@ -28,7 +28,7 @@ from cloudbank.tasks import givereward
 CELERY_BEAT_SCHEDULE = {
     'task-number-one': {
         'task': 'cloudbank.tasks.givereward',
-        'schedule': crontab(minute='*/55')
+        'schedule': crontab(hour='*/4')
     }
 }
 
