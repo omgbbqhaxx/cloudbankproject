@@ -3,7 +3,7 @@ netifaces==0.10.6
 django>=2.0.11
 gunicorn==19.7.1
 tornado==4.5.3
-twisted[tls]==19.2.1
+twisted[tls]==19.7.0
 aioredis==1.1.0
 pycrypto==2.6.1
 autobahn[twisted]==18.3.1
